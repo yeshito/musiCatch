@@ -1,3 +1,63 @@
+*** Project Tasks ***
+
+- [ ] * Setup database schema
+- [ ] * Setup user authentication and authorization using express, bcrypt, and Neo4j
+- [ ] * Once account is created provide instructions for user to export itunes library to xml file and upload the file to their account, parse the xml file for the artist names, and send that from the front-end to the database, associate them with the user and put those artists at the front of the update queue.
+- [ ] * Write api requests for getting a new artist's id, and creating them in the database
+- [ ] * Write api request for getting artists releases and parsing it for most recent and putting them into the database.
+- [ ] * Create worker which sends api requests to itunes api and gets updates on new releases.
+- [ ] * Create worker which takes new releases sends it to db, and gets list of users who need to be notified.
+- [ ] * Create worker which receives messages, usernames, phone numbers, to compose message and put into queue.
+- [ ] * Create worker which goes through queue of update text messages, compiles them and sends them off to Twilio to actually send texts and sends confirmation to server to update in db the date and release that a user was sent an update on.
+
+
+*FRONT-END*
+- [ ] * Wireframes
+- [ ] * Setup basic home page with account creation and login, with dark them
+- [ ] * Ability to upload xml itunes library file
+- [ ] User dashboard which upon login shows them releases that they were notified about and links to releases.
+- [ ] Use React to allow users to manually add artists to their account, send api requests to get artist id, and send all of the newly added artists to the db to build edges.
+
+
+
+
+
+Html, CSS, React front end with dashboard of collection of recent updates, (api calls for new releases? or on server side.) User login account, bcrypt, etc. Upload xml itunes library file
+express-xml-bodyparser
+
+Neo4j
+Does not create duplicate relationships
+back end with node express server, spotify oauth, get email and/or telephone number to text updates. Ideally anytime a user’s liked artist releases something (or once  a week depending on how frequently I can check the new releases).
+
+Redis worker to queue up notification requests to Twilio. Have a worker that is constantly checking for new releases for artists in the database and adds it to the database if it finds one, and sets up the twilio message notification send.
+
+Twilio to send text notifications of new releases with image of release or musicvideo
+
+node/express-handles data that comes back from front end api requests and puts into database. Parse out artist duplicates from
+
+connect server to neo4j
+Module: apoc Installation
+
+
+$ npm install apoc
+
+
+Spotify and itunes?
+
+itunes:
+
+has search and lookup api requests
+
+search: search by artist name, (xml has release date, artist name and persistent ID but not artist ID)
+filter for most recent artist releases,
+
+Oauth spotify, get all artists from Your music make api call for each artist, get list of albums and make api calls for each album to get release date.
+
+Spotify already has updates on new releases for artists that are followed, the API query setup is going to be more requests per finding new releases than itunes.
+
+
+
+
 ## Step by step API calls needed for getting an artist's (Radiohead) newest releases from the itunes search API
 
 * API call 1 (get Artist) appleID
