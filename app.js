@@ -1,16 +1,33 @@
 'use strict';
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
+// var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 var bcrypt = require('bcrypt');
+// var apoc = require('apoc');
+var neo4j = require('neo4j-driver').v1;
+var driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "capstone4"));
+var session = driver.session();
+session
+  .run( "CREATE (a:Person {name:'Arthur', title:'King'})" )
+  .then( function()
+  {
+    return session.run( "MATCH (a:Person) WHERE a.name = 'Arthur' RETURN a.name AS name, a.title AS title" )
+  })
+  .then( function( result ) {
+    console.log( result.records[0].get("title") + " " + result.records[0].get("name") );
+    session.close();
+    driver.close();
+  })
+// routes
 var routes = require('./routes/index');
 var login = require('./routes/login');
 var signup = require('./routes/signup');
 var users = require('./routes/users');
+
 
 var app = express();
 
@@ -19,6 +36,7 @@ var app = express();
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -29,7 +47,6 @@ app.use('/', routes);
 app.use('/login', login);
 app.use('/signup', signup)
 app.use('/users', users);
-
 
 
 
