@@ -3,15 +3,25 @@
   <head>
     <meta charset="utf-8">
     <title>musiCatch</title>
-    <script type="text/javascript" src="./javascripts/index.jsx"></script>
+    <!-- <script src="/javascripts/index.jsx"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.js"></script>
-    <script src="lib/browser/neo4j-web.min.js"></script>
+    <!-- <script src="lib/browser/neo4j-web.min.js"></script> -->
   </head>
   <body>
     <h1>musiCatch</h1>
     <form method="post" action="/signup">
       <h2>Signup</h2>
+			<div>
+				<div>
+					<input name="firstName" type="text" required="" placeholder="First Name">
+				</div>
+			</div>
+			<div>
+				<div>
+					<input name="lastName" type="text" required="" placeholder="Last Name">
+				</div>
+			</div>
 			<div>
 				<div>
 					<input name="newEmail" type="email" required="" placeholder="Email">
@@ -31,7 +41,7 @@
     <form method="post" action="/login">
       <h2>Login</h2>
       <div>
-        <input name="username" type="text" required="" placeholder="Username">
+        <input name="email" type="email" required="" placeholder="Email">
       </div>
       <div>
         <input name="password" type="password" required="" placeholder="Password">

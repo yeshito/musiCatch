@@ -31,7 +31,7 @@
   * firstName
   * lastName
   * cellNum
-  * creationDate
+  * signupDate
 
   #### Artist ####
   * "artistName": "Radiohead",
