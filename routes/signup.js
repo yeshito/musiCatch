@@ -23,9 +23,9 @@ router.post('/', (req, res, next) => {
         return session.run("CREATE (u:User { firstName: {firstName}, lastName: {lastName}, email: {email}, password: {hash}, signupDate: {signupDate} }) " +
                           "RETURN id(u)", {firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.newEmail, hash: hash , signupDate: new Date().toString()})
                   .then(function(user) {
-                    let userId = user.records[0]['_fields'][0]['low']
+                    let userId = user.records[0]['_fields'][0]['low'];
                     req.session.user = userId;
-                    res.redirect()
+                    // res.redirect()
                 }, (error) => {
                   console.log(error);
                 })
