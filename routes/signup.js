@@ -14,19 +14,20 @@ router.post('/', (req, res, next) => {
 
   session
     .run( "MATCH (a:User) WHERE a.email = {email} RETURN a", { email: req.body.newEmail })
-    .then(function(result) {
+    .then( result => {
 
       if(result.records.length > 0) {
         res.send('email already exists!');
       } else {
 
         return session.run("CREATE (u:User { firstName: {firstName}, lastName: {lastName}, email: {email}, password: {hash}, signupDate: {signupDate} }) " +
-                          "RETURN id(u)", {firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.newEmail, hash: hash , signupDate: new Date().toString()})
-                  .then(function(user) {
+                          "RETURN id(u)"
+                          , {firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.newEmail, hash: hash , signupDate: new Date().toString()})
+                  .then( user => {
                     let userId = user.records[0]['_fields'][0]['low'];
                     req.session.user = userId;
-                    // res.redirect()
-                }, (error) => {
+                    res.send('../public/upload.html');
+                }, error => {
                   console.log(error);
                 })
       }
