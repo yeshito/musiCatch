@@ -18,7 +18,7 @@ var routes = require('./routes/index');
 var login = require('./routes/login');
 var signup = require('./routes/signup');
 var users = require('./routes/users');
-
+var upload = require('./routes/upload')
 
 var app = express();
 
@@ -38,6 +38,7 @@ app.use('/', routes);
 app.use('/login', login);
 app.use('/signup', signup)
 app.use('/users', users);
+app.use('/upload', upload);
 
 
 

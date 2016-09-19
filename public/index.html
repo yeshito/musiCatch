@@ -6,52 +6,56 @@
     <!-- <script src="/javascripts/index.jsx"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.js"></script>
+    <link rel="stylesheet" href="./stylesheets/style.css"></link>
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Baloo+Bhaina|Modak|Pacifico" rel="stylesheet">
     <!-- <script src="lib/browser/neo4j-web.min.js"></script> -->
   </head>
   <body>
-    <h1>musiCatch</h1>
-    <form method="post" action="/signup">
-      <h2>Signup</h2>
-			<div>
-				<div>
-					<input name="firstName" type="text" required="" placeholder="First Name">
-				</div>
-			</div>
-			<div>
-				<div>
-					<input name="lastName" type="text" required="" placeholder="Last Name">
-				</div>
-			</div>
-			<div>
-				<div>
-					<input name="newEmail" type="email" required="" placeholder="Email">
-				</div>
-			</div>
-			<div>
-				<div>
-					<input name="newPassword" type="password" required="" placeholder="Password">
-				</div>
-			</div>
-      <div>
-  			<button type="submit">
-  				Signup
-  			</button>
-  		</div>
-    </form>
-    <form method="post" action="/login">
-      <h2>Login</h2>
-      <div>
-        <input name="email" type="email" required="" placeholder="Email">
-      </div>
-      <div>
-        <input name="password" type="password" required="" placeholder="Password">
-      </div>
-      <div>
-        <button type="submit">Log In</button>
-      </div>
-      <div>
-        <a href="page-recoverpw.html" class="text-muted"><i></i> Forgot your password?</a>
-      </div>
-    </form>
+    <h1 class="title saffron">musi</h1><h1 class="title sea">Catch</h1>
+    <div class="formContainer">
+      <form method="post" action="/signup" class="circleForm seaBg">
+        <h2 class="black">Signup</h2>
+        <div>
+          <div>
+            <input name="firstName" type="text" required="" placeholder="First Name">
+          </div>
+        </div>
+        <div>
+          <div>
+            <input name="lastName" type="text" required="" placeholder="Last Name">
+          </div>
+        </div>
+        <div>
+          <div>
+            <input name="newEmail" type="email" required="" placeholder="Email">
+          </div>
+        </div>
+        <div>
+          <div>
+            <input name="newPassword" type="password" required="" placeholder="Password">
+          </div>
+        </div>
+        <div>
+          <button type="submit">
+            Signup
+          </button>
+        </div>
+      </form>
+      <form method="post" action="/login" class="circleForm saffronBg">
+        <h2 class="black">Login</h2>
+        <div>
+          <input name="email" type="email" required="" placeholder="Email">
+        </div>
+        <div>
+          <input name="password" type="password" required="" placeholder="Password">
+        </div>
+        <div>
+          <button type="submit">Log In</button>
+        </div>
+        <div>
+          <a href="page-recoverpw.html" class="text-muted"><i>
+        </div>
+      </form>
+    </div>
   </body>
 </html>
