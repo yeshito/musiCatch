@@ -20,7 +20,7 @@ body {
   font-family: 'Shrikhand';
   margin: 0;
 }
-.formContainer {
+#formContainer {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
