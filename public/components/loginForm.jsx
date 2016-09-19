@@ -1,7 +1,7 @@
-// const LoginForm = React.createClass({
 const React = require('react');
 const ReactDOM = require('react-dom')
-  export class LoginForm extends React.Component {
+
+module.exports = React.createClass({
   render: () => {
     return (
       <form onSubmit={this.onFormSubmit} method="post" action="/login" className="circleForm saffronBg">
@@ -17,5 +17,4 @@ const ReactDOM = require('react-dom')
         </div>
       </form>)
   }
-}
-// });
+})

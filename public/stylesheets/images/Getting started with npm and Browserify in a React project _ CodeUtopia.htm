@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<!-- saved from url=(0097)http://codeutopia.net/blog/2016/01/25/getting-started-with-npm-and-browserify-in-a-react-project/ -->
+<html class="js no-touchevents cssanimations csspointerevents csstransforms supports csstransforms3d preserve3d csstransitions wf-opensans-n4-active wf-active wf-opensans3a3002c4002c6002c8007clato3a3002c4002c7002c900-n4-inactive" lang="en-US" style=""><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Getting started with npm and Browserify in a React project | CodeUtopia</title>
+<link rel="pingback" href="http://codeutopia.net/xmlrpc.php"><link rel="alternate" type="application/rss+xml" title="CodeUtopia » Feed" href="http://codeutopia.net/feed/">
+<link rel="alternate" type="application/rss+xml" title="CodeUtopia » Comments Feed" href="http://codeutopia.net/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="CodeUtopia » Getting started with npm and Browserify in a React project Comments Feed" href="http://codeutopia.net/blog/2016/01/25/getting-started-with-npm-and-browserify-in-a-react-project/feed/">
+		<script async="" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/analytics.js"></script><script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/codeutopia.net\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4.5"}};
+			!function(a,b,c){function d(a){var c,d,e,f=b.createElement("canvas"),g=f.getContext&&f.getContext("2d"),h=String.fromCharCode;return g&&g.fillText?(g.textBaseline="top",g.font="600 32px Arial","flag"===a?(g.fillText(h(55356,56806,55356,56826),0,0),f.toDataURL().length>3e3):"diversity"===a?(g.fillText(h(55356,57221),0,0),c=g.getImageData(16,16,1,1).data,g.fillText(h(55356,57221,55356,57343),0,0),c=g.getImageData(16,16,1,1).data,e=c[0]+","+c[1]+","+c[2]+","+c[3],d!==e):("simple"===a?g.fillText(h(55357,56835),0,0):g.fillText(h(55356,57135),0,0),0!==g.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8"),diversity:d("diversity")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8&&c.supports.diversity||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="inbound-shortcodes-css" href="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/frontend-render.css" type="text/css" media="all">
+<link rel="stylesheet" id="wp-syntax-css-css" href="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/wp-syntax.css" type="text/css" media="all">
+<link rel="stylesheet" id="x-stack-css" href="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/integrity-light.css" type="text/css" media="all">
+<link rel="stylesheet" id="x-child-css" href="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="x-google-fonts-css" href="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/css" type="text/css" media="all">
+<script type="text/javascript" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/jquery.js"></script>
+<script type="text/javascript" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/jquery-migrate.min.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var inbound_settings = {"post_id":"1569","variation_id":"0","ip_address":"128.177.113.106","wp_lead_data":{"lead_id":null,"lead_email":null,"lead_uid":null},"admin_url":"http:\/\/codeutopia.net\/wp-admin\/admin-ajax.php","track_time":"2016\/09\/19 22:13:43","post_type":"post","page_tracking":"on","search_tracking":"on","comment_tracking":"on","custom_mapping":[],"inbound_track_exclude":"","inbound_track_include":"","is_admin":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/inboundAnalytics.min.js"></script>
+<script type="text/javascript" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/x-head.min.js"></script>
+<script type="text/javascript" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/cs-head.min.js"></script>
+<script type="text/javascript" data-cfasync="false" id="omapi-script" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/api.min.js"></script>
+<link rel="https://api.w.org/" href="http://codeutopia.net/wp-json/">
+<link rel="canonical" href="http://codeutopia.net/blog/2016/01/25/getting-started-with-npm-and-browserify-in-a-react-project/">
+<link rel="shortlink" href="http://codeutopia.net/?p=1569">
+<link rel="alternate" type="application/json+oembed" href="http://codeutopia.net/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fcodeutopia.net%2Fblog%2F2016%2F01%2F25%2Fgetting-started-with-npm-and-browserify-in-a-react-project%2F">
+<link rel="alternate" type="text/xml+oembed" href="http://codeutopia.net/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fcodeutopia.net%2Fblog%2F2016%2F01%2F25%2Fgetting-started-with-npm-and-browserify-in-a-react-project%2F&amp;format=xml">
+<script type="text/javascript" data-cfasync="false">var _mmunch = {'front': false, 'page': false, 'post': false, 'category': false, 'author': false, 'search': false, 'attachment': false, 'tag': false};_mmunch['post'] = true; _mmunch['postData'] = {"ID":1569,"post_name":"getting-started-with-npm-and-browserify-in-a-react-project","post_title":"Getting started with npm and Browserify in a React project","post_type":"post","post_author":"2","post_status":"publish"}; _mmunch['postCategories'] = [{"term_id":5,"name":"Programming","slug":"programming","term_group":0,"term_taxonomy_id":5,"taxonomy":"category","description":"Topics related to programming. ","parent":0,"count":238,"filter":"raw","object_id":1569,"cat_ID":5,"category_count":238,"category_description":"Topics related to programming. ","cat_name":"Programming","category_nicename":"programming","category_parent":0}]; _mmunch['postTags'] = [{"term_id":8,"name":"JavaScript","slug":"javascript","term_group":0,"term_taxonomy_id":10,"taxonomy":"post_tag","description":"","parent":0,"count":80,"filter":"raw","object_id":1569},{"term_id":91,"name":"React","slug":"react","term_group":0,"term_taxonomy_id":91,"taxonomy":"post_tag","description":"","parent":0,"count":6,"filter":"raw","object_id":1569}]; _mmunch['postAuthor'] = {"name":"","ID":""};</script><script data-cfasync="false" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/site.js" id="mailmunch-script" data-mailmunch-site-id="25803" async=""></script><!-- Running WishList Member v2.90.3007 -->
+<style type="text/css">
+/* The Main Widget Enclosure */
+.WishListMember_Widget{ }
+
+
+/* The Main Login Merge Code Enclosure */
+.WishListMember_LoginMergeCode{ }
+</style><style id="x-generated-css" type="text/css">a,h1 a:hover,h2 a:hover,h3 a:hover,h4 a:hover,h5 a:hover,h6 a:hover,.x-topbar .p-info a:hover,.x-breadcrumb-wrap a:hover,.widget ul li a:hover,.widget ol li a:hover,.widget.widget_text ul li a,.widget.widget_text ol li a,.widget_nav_menu .current-menu-item > a,.x-widgetbar .widget ul li a:hover,.x-accordion-heading .x-accordion-toggle:hover,.x-comment-author a:hover,.x-comment-time:hover,.x-recent-posts a:hover .h-recent-posts{color:#ff2a13;}a:hover,.widget.widget_text ul li a:hover,.widget.widget_text ol li a:hover,.x-twitter-widget ul li a:hover{color:#d80f0f;}.rev_slider_wrapper,a.x-img-thumbnail:hover,.x-slider-container.below,.page-template-template-blank-3-php .x-slider-container.above,.page-template-template-blank-6-php .x-slider-container.above{border-color:#ff2a13;}.entry-thumb:before,.x-pagination span.current,.flex-direction-nav a,.flex-control-nav a:hover,.flex-control-nav a.flex-active,.mejs-time-current,.x-dropcap,.x-skill-bar .bar,.x-pricing-column.featured h2,.h-comments-title small,.x-entry-share .x-share:hover,.x-highlight,.x-recent-posts .x-recent-posts-img:after{background-color:#ff2a13;}.x-nav-tabs > .active > a,.x-nav-tabs > .active > a:hover{box-shadow:inset 0 3px 0 0 #ff2a13;}.x-main{width:69.536945%;}.x-sidebar{width:25.536945%;}.x-topbar .p-info,.x-topbar .p-info a,.x-navbar .desktop .x-nav > li > a,.x-navbar .desktop .sub-menu a,.x-navbar .mobile .x-nav li > a,.x-breadcrumb-wrap a,.x-breadcrumbs .delimiter{color:#999999;}.x-navbar .desktop .x-nav > li > a:hover,.x-navbar .desktop .x-nav > .x-active > a,.x-navbar .desktop .x-nav > .current-menu-item > a,.x-navbar .desktop .sub-menu a:hover,.x-navbar .desktop .sub-menu .x-active > a,.x-navbar .desktop .sub-menu .current-menu-item > a,.x-navbar .desktop .x-nav .x-megamenu > .sub-menu > li > a,.x-navbar .mobile .x-nav li > a:hover,.x-navbar .mobile .x-nav .x-active > a,.x-navbar .mobile .x-nav .current-menu-item > a{color:#272727;}.x-navbar .desktop .x-nav > li > a:hover,.x-navbar .desktop .x-nav > .x-active > a,.x-navbar .desktop .x-nav > .current-menu-item > a{box-shadow:inset 0 4px 0 0 #ff2a13;}.x-navbar .desktop .x-nav > li > a{height:90px;padding-top:37px;}.x-navbar .desktop .x-nav > li ul{top:75px;;}.x-comment-author,.x-comment-time,.comment-form-author label,.comment-form-email label,.comment-form-url label,.comment-form-rating label,.comment-form-comment label,.widget_calendar #wp-calendar caption,.widget.widget_rss li .rsswidget{font-family:Lato;font-weight:700;}.p-landmark-sub,.p-meta,input,button,select,textarea{font-family:Lato;}.widget ul li a,.widget ol li a,.x-comment-time{color:#272727;}.widget_text ol li a,.widget_text ul li a{color:#ff2a13;}.widget_text ol li a:hover,.widget_text ul li a:hover{color:#d80f0f;}.comment-form-author label,.comment-form-email label,.comment-form-url label,.comment-form-rating label,.comment-form-comment label,.widget_calendar #wp-calendar th,.p-landmark-sub strong,.widget_tag_cloud .tagcloud a:hover,.widget_tag_cloud .tagcloud a:active,.entry-footer a:hover,.entry-footer a:active,.x-breadcrumbs .current,.x-comment-author,.x-comment-author a{color:#272727;}.widget_calendar #wp-calendar th{border-color:#272727;}.h-feature-headline span i{background-color:#272727;}@media (max-width:979px){}body{font-size:16px;font-style:normal;font-weight:400;color:#272727;background-color:#f3f3f3;}a:focus,select:focus,input[type="file"]:focus,input[type="radio"]:focus,input[type="submit"]:focus,input[type="checkbox"]:focus{outline:thin dotted #333;outline:5px auto #ff2a13;outline-offset:-1px;}h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6{font-family:"Lato",sans-serif;font-style:normal;font-weight:700;}h1,.h1{letter-spacing:-0.035em;}h2,.h2{letter-spacing:-0.035em;}h3,.h3{letter-spacing:-0.035em;}h4,.h4{letter-spacing:-0.035em;}h5,.h5{letter-spacing:-0.035em;}h6,.h6{letter-spacing:-0.035em;}.w-h{font-weight:700 !important;}.x-container.width{width:88%;}.x-container.max{max-width:1200px;}.x-main.full{float:none;display:block;width:auto;}@media (max-width:979px){.x-main.full,.x-main.left,.x-main.right,.x-sidebar.left,.x-sidebar.right{float:none;display:block;width:auto !important;}}.entry-header,.entry-content{font-size:16px;}body,input,button,select,textarea{font-family:"Lato",sans-serif;}h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6,h1 a,h2 a,h3 a,h4 a,h5 a,h6 a,.h1 a,.h2 a,.h3 a,.h4 a,.h5 a,.h6 a,blockquote{color:#272727;}.cfc-h-tx{color:#272727 !important;}.cfc-h-bd{border-color:#272727 !important;}.cfc-h-bg{background-color:#272727 !important;}.cfc-b-tx{color:#272727 !important;}.cfc-b-bd{border-color:#272727 !important;}.cfc-b-bg{background-color:#272727 !important;}.x-navbar-inner{min-height:90px;}.x-brand{margin-top:22px;font-family:"Arimo",sans-serif;font-size:42px;font-style:normal;font-weight:400;letter-spacing:-0.035em;color:#272727;}.x-brand:hover,.x-brand:focus{color:#272727;}.x-navbar .x-nav-wrap .x-nav > li > a{font-family:"Lato",sans-serif;font-style:normal;font-weight:700;letter-spacing:0.085em;text-transform:uppercase;}.x-navbar .desktop .x-nav > li > a{font-size:13px;}.x-navbar .desktop .x-nav > li > a:not(.x-btn-navbar-woocommerce){padding-left:20px;padding-right:20px;}.x-navbar .desktop .x-nav > li > a > span{margin-right:-0.085em;}.x-btn-navbar{margin-top:20px;}.x-btn-navbar,.x-btn-navbar.collapsed{font-size:24px;}@media (max-width:979px){.x-widgetbar{left:0;right:0;}}.x-btn,.button,[type="submit"]{color:#ffffff;border-color:#ac1100;background-color:#ff2a13;margin-bottom:0.25em;text-shadow:0 0.075em 0.075em rgba(0,0,0,0.5);box-shadow:0 0.25em 0 0 #a71000,0 4px 9px rgba(0,0,0,0.75);border-radius:0.25em;}.x-btn:hover,.button:hover,[type="submit"]:hover{color:#ffffff;border-color:#600900;background-color:#ef2201;margin-bottom:0.25em;text-shadow:0 0.075em 0.075em rgba(0,0,0,0.5);box-shadow:0 0.25em 0 0 #a71000,0 4px 9px rgba(0,0,0,0.75);}.x-btn.x-btn-real,.x-btn.x-btn-real:hover{margin-bottom:0.25em;text-shadow:0 0.075em 0.075em rgba(0,0,0,0.65);}.x-btn.x-btn-real{box-shadow:0 0.25em 0 0 #a71000,0 4px 9px rgba(0,0,0,0.75);}.x-btn.x-btn-real:hover{box-shadow:0 0.25em 0 0 #a71000,0 4px 9px rgba(0,0,0,0.75);}.x-btn.x-btn-flat,.x-btn.x-btn-flat:hover{margin-bottom:0;text-shadow:0 0.075em 0.075em rgba(0,0,0,0.65);box-shadow:none;}.x-btn.x-btn-transparent,.x-btn.x-btn-transparent:hover{margin-bottom:0;border-width:3px;text-shadow:none;text-transform:uppercase;background-color:transparent;box-shadow:none;}/* styles for social in topbar */
+@media (min-width: 768px) {
+   .x-topbar {
+      display: none !important;
+   }
+
+   .x-navbar .x-social-global {
+      position: absolute; right: 500px; margin: 30px 0 0 10px;
+   }
+
+   .x-navbar .x-social-global a {
+      margin: 0 2px;
+      font-size: 30px;
+   }
+}
+
+@media (max-width: 979px) {
+.x-navbar .x-social-global {
+right: 100px;
+}
+}
+
+@media (max-width: 767px) {
+   .x-topbar {
+      display: block !important;
+   }
+
+   .x-navbar .x-social-global {
+      display: none !important;
+   }
+}
+
+.wp_syntax pre {
+/* default integrity bg color */
+background: #f7f7f9 !important;
+padding: 0.5em 1em !important;
+font-family: Consolas, Menlo, "Andale Mono WT","Andale Mono", monospace !important;
+}</style><script type="text/javascript" async="" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/embed.js"></script><script async="" type="text/javascript" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/count.js"></script><script src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/jquery.min.js"></script><script src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/jquery.min.js"></script><link rel="stylesheet" type="text/css" href="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/styles.css"><link rel="stylesheet" href="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/css(1)" media="all"><script src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/webfont.js"></script><link rel="stylesheet" href="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/css(2)" media="all"><script src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/webfont.js"></script></head>
+
+<body class="single single-post postid-1569 single-format-standard x-integrity x-integrity-light x-navbar-static-active x-full-width-layout-active x-content-sidebar-active x-v4_4_2 x-child-theme-active cornerstone-v1_2_4"><div class="mailmunch-topbar mailmunch-topbar-15744153e5512c31" style="position: fixed; top: 0px; left: 0px; z-index: 999999; width: 100%; line-height: 0px; display: block;"><iframe class="mailmunch-topbar-iframe mailmunch-topbar-iframe-15744153e5512c31" frameborder="0" scrolling="no" allowtransparency="true" style="background: transparent; border: 0px; width: 100%; height: 50px; z-index: 18000; margin-bottom: 0px; margin-top: 0px;" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/saved_resource.html"></iframe></div><div id="mailmunch-topbar-pusher" style="position: relative; overflow: hidden; height: 50px;"></div>
+
+  
+  <div id="top" class="site">
+
+  
+  
+  <header class="masthead masthead-inline" role="banner">
+    
+    
+
+  <div class="x-navbar-wrap">
+    <div class="x-navbar">
+      <div class="x-navbar-inner">
+        <div class="x-container max width">
+          
+
+<a href="http://codeutopia.net/" class="x-brand text" title="JavaScript development tips and tricks for the real world">
+  CodeUtopia</a>          
+<div class="x-social-global"><a href="http://twitter.com/jhartikainen" class="twitter" title="Twitter" target="_blank"><i class="x-icon-twitter-square" data-x-icon="" aria-hidden="true"></i></a><a href="https://plus.google.com/u/0/+JaniHartikainen" class="google-plus" title="Google+" target="_blank"><i class="x-icon-google-plus-square" data-x-icon="" aria-hidden="true"></i></a><a href="https://fi.linkedin.com/in/janihartikainen" class="linkedin" title="LinkedIn" target="_blank"><i class="x-icon-linkedin-square" data-x-icon="" aria-hidden="true"></i></a><a href="http://github.com/jhartikainen" class="github" title="GitHub" target="_blank"><i class="x-icon-github-square" data-x-icon="" aria-hidden="true"></i></a></div>
+<a href="http://codeutopia.net/blog/2016/01/25/getting-started-with-npm-and-browserify-in-a-react-project/#" class="x-btn-navbar collapsed" data-toggle="collapse" data-target=".x-nav-wrap.mobile">
+  <i class="x-icon-bars" data-x-icon=""></i>
+  <span class="visually-hidden">Navigation</span>
+</a>
+
+<nav class="x-nav-wrap desktop" role="navigation">
+  <ul id="menu-main-nav" class="x-nav"><li id="menu-item-1671" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1671"><a href="http://codeutopia.net/"><span>Home</span></a></li>
+<li id="menu-item-1804" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-1804"><a href="http://codeutopia.net/blog/"><span>Blog</span></a></li>
+<li id="menu-item-1672" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1672"><a href="http://codeutopia.net/about/"><span>About</span></a></li>
+<li id="menu-item-1673" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1673"><a href="http://codeutopia.net/contact/"><span>Contact</span></a></li>
+<li class="menu-item x-menu-item x-menu-item-search"><a href="http://codeutopia.net/blog/2016/01/25/getting-started-with-npm-and-browserify-in-a-react-project/#" class="x-btn-navbar-search"><span><i class="x-icon-search" data-x-icon="" aria-hidden="true"></i><span class="x-hidden-desktop"> Search</span></span></a></li></ul></nav>
+
+<div class="x-nav-wrap mobile collapse">
+  <ul id="menu-main-nav-1" class="x-nav"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1671"><a href="http://codeutopia.net/"><span>Home</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-1804"><a href="http://codeutopia.net/blog/"><span>Blog</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1672"><a href="http://codeutopia.net/about/"><span>About</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1673"><a href="http://codeutopia.net/contact/"><span>Contact</span></a></li>
+<li class="menu-item x-menu-item x-menu-item-search"><a href="http://codeutopia.net/blog/2016/01/25/getting-started-with-npm-and-browserify-in-a-react-project/#" class="x-btn-navbar-search"><span><i class="x-icon-search" data-x-icon="" aria-hidden="true"></i><span class="x-hidden-desktop"> Search</span></span></a></li></ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    
+    </header>
+
+    
+  
+  <div class="x-container max width offset">
+    <div class="x-main left" role="main">
+
+              
+<article id="post-1569" class="post-1569 post type-post status-publish format-standard hentry category-programming tag-javascript tag-react no-post-thumbnail">
+  <div class="entry-featured">
+      </div>
+  <div class="entry-wrap">
+    
+<header class="entry-header">
+    <h1 class="entry-title">Getting started with npm and Browserify in a React project</h1>
+    <p class="p-meta">Tags: <span><a href="http://codeutopia.net/blog/tag/javascript/" rel="tag">JavaScript</a></span><span><a href="http://codeutopia.net/blog/tag/react/" rel="tag">React</a></span></p></header>    
+
+
+<div class="entry-content content">
+
+
+  <div class="mailmunch-forms-before-post" style="display: none !important;"></div><p>This is the second article in a series where we build a Slack-style chat app with React. </p>
+<p>So far, in the <a href="http://codeutopia.net/2016/01/17/learning-react-basics-and-building-a-basic-application-prototype/">previous article</a>, we’ve built a simple prototype. We want to start adding features to it – such as actually supporting multiple people chatting – but before we do that, let’s set up some tools.</p>
+<p>npm and Browserify are useful tools which will make our lives easier in the long run as our app starts becoming more complex.</p>
+<p>So, in this article, we’ll move our <a href="http://codeutopia.net/2016/01/17/learning-react-basics-and-building-a-basic-application-prototype/">previous code</a> to use npm and Browserify.</p>
+<p><span id="more-1569"></span></p>
+<h3>What are npm and Browserify?</h3>
+<p>npm is Node.js’ package repository / package manager. One of the big benefits of using npm in our project is being able to use the huge amount of libraries available on npm. It also makes it easy for others to collaborate in our project, as they can simply run <code>npm install</code> and get all the libraries our project uses.</p>
+<p>npm can also help by allowing us to run scripts, such as build scripts or test scripts, without having to remember complex command line invocations. This is similar to Grunt or Gulp, but somewhat simpler.</p>
+<p>Browserify allows us to use Node-style modules in the browser. Normally when we want to include some library code in our project, we include another script tag on the page. Managing the scripts and especially the correct order of scripts can become tedious, especially if we use a lot of small libraries as is popular with npm. </p>
+<p>Browserify helps us solve this by letting us use CommonJS style <code>require('filename')</code> in our code. All of the required files are bundled together into a single file which we can then include on our page. As an added benefit, we can combine Browserify and Babel, so that we don’t need to include the Babel <code>browser.js</code> file on the page either.</p>
+<p>Using <code>require</code> also makes it easier to tell which functionality our code is using, and it avoids relying on everything being available globally. If you’re familiar with ES6 module imports, it works in a similar way.</p>
+<p>What about Webpack? You might’ve heard about a tool called Webpack, which is popular with React projects. Webpack has the same idea as browserify: It allows bundling your files together and using <code>require()</code>. However, Webpack is a bit more advanced than Browserify, and it has some features which are more useful for more complex apps. With the advanced featureset comes a price – Getting started with Webpack is not as simple as with Browserify.</p>
+<p>This is why I’ve decided to use Browserify for now. It’s easier to get started with, and we don’t need any of the advanced Webpack features. Depending on where this project goes, we may discuss using Webpack in a future article. It’s worth noting that moving to Webpack will not require any JS code changes.</p>
+<h3>Installation</h3>
+<p>For these tools, we need to install Node.js. Almost all modern JavaScript tools use it, so if you’re not familiar with it yet, now is a good time to get started.</p>
+<p>You can download and install Node by grabbing one of the packages from the <a href="https://nodejs.org/">Node.js website</a>.</p>
+<p>Once you’ve installed it, you should have the commands <code>node</code> and <code>npm</code> available on the command line. <code>node</code> runs the Node.js REPL, which allows you to run JavaScript code, similar to how you can run code in the browser’s console. This can be convenient for testing things, but what we’re interested in this time is the <code>npm</code> command.</p>
+<h3>Setting up npm</h3>
+<p>As we want to use npm to manage the libraries our code depends on, we first need a <code>package.json</code> file. This file is used by npm to track what libraries we need, and some other metadata.</p>
+<p>First, create a directory for the project, and open a command line in the directory. We can easily create a <code>package.json</code> for our project using…</p>
+<p><code>npm init</code></p>
+<p>This prompts you to fill in some information about the project. If you publish your package on <a href="https://www.npmjs.com/">the npm website</a>, the information is displayed there. If you don’t plan to publish the package, you can just hit enter to continue with the defaults – you can always change it later.</p>
+<p>This generates a <code>package.json</code> file for us, which will look something like this:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="code"><pre class="javascript" style="font-family:monospace;"><span style="color: #009900;">{</span>
+  <span style="color: #3366CC;">"name"</span><span style="color: #339933;">:</span> <span style="color: #3366CC;">"react-2"</span><span style="color: #339933;">,</span>
+  <span style="color: #3366CC;">"version"</span><span style="color: #339933;">:</span> <span style="color: #3366CC;">"0.0.0"</span><span style="color: #339933;">,</span>
+  <span style="color: #3366CC;">"description"</span><span style="color: #339933;">:</span> <span style="color: #3366CC;">""</span><span style="color: #339933;">,</span>
+  <span style="color: #3366CC;">"main"</span><span style="color: #339933;">:</span> <span style="color: #3366CC;">"index.js"</span><span style="color: #339933;">,</span>
+  <span style="color: #3366CC;">"scripts"</span><span style="color: #339933;">:</span> <span style="color: #009900;">{</span>
+    <span style="color: #3366CC;">"test"</span><span style="color: #339933;">:</span> <span style="color: #3366CC;">"echo <span style="color: #000099; font-weight: bold;">\"</span>Error: no test specified<span style="color: #000099; font-weight: bold;">\"</span> &amp;&amp; exit 1"</span>
+  <span style="color: #009900;">}</span><span style="color: #339933;">,</span>
+  <span style="color: #3366CC;">"author"</span><span style="color: #339933;">:</span> <span style="color: #3366CC;">""</span><span style="color: #339933;">,</span>
+  <span style="color: #3366CC;">"license"</span><span style="color: #339933;">:</span> <span style="color: #3366CC;">"ISC"</span>
+<span style="color: #009900;">}</span></pre></td></tr></tbody></table></div>
+
+<p>Most of the fields should be fairly self-explanatory. We don’t need to modify the file by hand, but if you want to know what else you can put in it, check out this <a href="http://browsenpm.org/package.json">interactive package.json guide</a> and <a href="https://docs.npmjs.com/files/package.json">npm’s package.json docs</a>.</p>
+<h3>Installing packages with npm</h3>
+<p>Now that we have a package file set up, we can use npm to keep track of our dependencies.</p>
+<p>Let’s install React and ReactDOM which we need for our app:</p>
+<p><code>npm install --save react react-dom</code></p>
+<p>Note: most npm commands should be ran in your project directory</p>
+<p>The install command is used, surprisingly, to install packages from the npm repository. When we pass the <code>--save</code> flag to it, npm saves the installed package’s versions into our <code>package.json</code> file. This makes it possible to install all saved dependencies with just <code>npm install</code> with no parameters.</p>
+<p>npm packages are installed in the <code>node_modules/</code> directory. You usually don’t need to do anything with the directory yourself, but if you want to check the library source code, it’s available there. If you’re using Git, it might be a good idea to add <code>node_modules/</code> to your ignore file so you don’t commit it into the repository. Instead, when cloning the repo, you simply use <code>npm install</code> which sets everything up.</p>
+<h3>Setting up a project directory structure</h3>
+<p>Next, let’s create a simple directory structure for our project. It doesn’t need to be anything fancy, as we can always change it later if necessary.</p>
+<p>I’ll create two directories:</p>
+<ul>
+<li><code>src/</code> – this is where our source code files will live</li>
+<li><code>build/</code> – Browserify output goes here</li>
+</ul>
+<p>The next step is to grab the code we had before, and change it a little bit so that it works with Browserify.</p>
+<p>First, I’ll take the HTML we had before, and put it into <code>index.html</code> in the project dir.</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="code"><pre class="html" style="font-family:monospace;">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="app"&gt;&lt;/div&gt;
+    &lt;script src="build/app.js"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre></td></tr></tbody></table></div>
+
+<p>Note that this is much simpler than what we had before. We can remove all the libraries and the script tag in the body, instead just loading <code>build/app.js</code>.</p>
+<p>Remember how I said Browserify bundles our files together? The <code>build/app.js</code> is this bundled file. We’ll look at how it gets generated in a bit.</p>
+<p>We also need to modify the JavaScript code slightly. We had two components: Chat and ChatMessage, which you can see <a href="https://jsfiddle.net/5asvedko/3/">here</a>.</p>
+<p>Let’s put each component into its own file, so that we end up with the following…</p><div class="mailmunch-forms-in-post-middle" style="display: none !important;"></div>
+<p><code>src/ChatMessage.js</code></p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="code"><pre class="javascript" style="font-family:monospace;"><span style="color: #000066; font-weight: bold;">var</span> React <span style="color: #339933;">=</span> require<span style="color: #009900;">(</span><span style="color: #3366CC;">'react'</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+&nbsp;
+module.<span style="color: #660066;">exports</span> <span style="color: #339933;">=</span> React.<span style="color: #660066;">createClass</span><span style="color: #009900;">(</span><span style="color: #009900;">{</span>
+  render<span style="color: #339933;">:</span> <span style="color: #000066; font-weight: bold;">function</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #000066; font-weight: bold;">return</span> <span style="color: #339933;">&lt;</span>p<span style="color: #339933;">&gt;</span><span style="color: #009900;">{</span><span style="color: #000066; font-weight: bold;">this</span>.<span style="color: #660066;">props</span>.<span style="color: #660066;">message</span><span style="color: #009900;">}</span><span style="color: #339933;">&lt;/</span>p<span style="color: #339933;">&gt;;</span>
+  <span style="color: #009900;">}</span>
+<span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span></pre></td></tr></tbody></table></div>
+
+<p>The first change you’ll notice is the first line. Instead of using a global, we use a require to load React. Any packages you install via <code>npm install</code> can be loaded simply by saying <code>require('name-of-package')</code>.</p>
+<p>The second change is we are assigning the <code>ChatMessage</code> component into <code>module.exports</code> instead of a variable. Anything assigned into <code>module.exports</code> becomes available to other modules that require it. In this case, when we require the <code>ChatMessage.js</code> file, we would get the component. You’ll see this next, as we update the Chat component.</p>
+<p><code>src/Chat.js</code></p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="code"><pre class="javascript" style="font-family:monospace;"><span style="color: #000066; font-weight: bold;">var</span> React <span style="color: #339933;">=</span> require<span style="color: #009900;">(</span><span style="color: #3366CC;">'react'</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000066; font-weight: bold;">var</span> ChatMessage <span style="color: #339933;">=</span> require<span style="color: #009900;">(</span><span style="color: #3366CC;">'./ChatMessage'</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+&nbsp;
+module.<span style="color: #660066;">exports</span> <span style="color: #339933;">=</span> React.<span style="color: #660066;">createClass</span><span style="color: #009900;">(</span><span style="color: #009900;">{</span>
+  getInitialState<span style="color: #339933;">:</span> <span style="color: #000066; font-weight: bold;">function</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #000066; font-weight: bold;">return</span> <span style="color: #009900;">{</span>
+      text<span style="color: #339933;">:</span> <span style="color: #3366CC;">''</span><span style="color: #339933;">,</span>
+      messages<span style="color: #339933;">:</span> <span style="color: #009900;">[</span><span style="color: #009900;">]</span>
+    <span style="color: #009900;">}</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span><span style="color: #339933;">,</span>
+&nbsp;
+  submit<span style="color: #339933;">:</span> <span style="color: #000066; font-weight: bold;">function</span><span style="color: #009900;">(</span>ev<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    ev.<span style="color: #660066;">preventDefault</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #000066; font-weight: bold;">var</span> newMessage <span style="color: #339933;">=</span> <span style="color: #339933;">&lt;</span>ChatMessage message<span style="color: #339933;">=</span><span style="color: #009900;">{</span><span style="color: #000066; font-weight: bold;">this</span>.<span style="color: #660066;">state</span>.<span style="color: #660066;">text</span><span style="color: #009900;">}</span> <span style="color: #339933;">/&gt;;</span>
+&nbsp;
+    <span style="color: #000066; font-weight: bold;">this</span>.<span style="color: #660066;">setState</span><span style="color: #009900;">(</span><span style="color: #009900;">{</span>
+      messages<span style="color: #339933;">:</span> <span style="color: #000066; font-weight: bold;">this</span>.<span style="color: #660066;">state</span>.<span style="color: #660066;">messages</span>.<span style="color: #660066;">concat</span><span style="color: #009900;">(</span><span style="color: #009900;">[</span>newMessage<span style="color: #009900;">]</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      text<span style="color: #339933;">:</span> <span style="color: #3366CC;">''</span>
+    <span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span><span style="color: #339933;">,</span>
+&nbsp;
+  updateInput<span style="color: #339933;">:</span> <span style="color: #000066; font-weight: bold;">function</span><span style="color: #009900;">(</span>ev<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #000066; font-weight: bold;">this</span>.<span style="color: #660066;">setState</span><span style="color: #009900;">(</span><span style="color: #009900;">{</span>
+      text<span style="color: #339933;">:</span> ev.<span style="color: #660066;">target</span>.<span style="color: #660066;">value</span>
+    <span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span><span style="color: #339933;">,</span>
+&nbsp;
+  render<span style="color: #339933;">:</span> <span style="color: #000066; font-weight: bold;">function</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #000066; font-weight: bold;">return</span> <span style="color: #339933;">&lt;</span>div<span style="color: #339933;">&gt;</span>
+      <span style="color: #339933;">&lt;</span>div<span style="color: #339933;">&gt;</span><span style="color: #009900;">{</span><span style="color: #000066; font-weight: bold;">this</span>.<span style="color: #660066;">state</span>.<span style="color: #660066;">messages</span><span style="color: #009900;">}</span><span style="color: #339933;">&lt;/</span>div<span style="color: #339933;">&gt;</span>
+      <span style="color: #339933;">&lt;</span>form onSubmit<span style="color: #339933;">=</span><span style="color: #009900;">{</span><span style="color: #000066; font-weight: bold;">this</span>.<span style="color: #660066;">submit</span><span style="color: #009900;">}</span><span style="color: #339933;">&gt;</span>
+        <span style="color: #339933;">&lt;</span>input onChange<span style="color: #339933;">=</span><span style="color: #009900;">{</span><span style="color: #000066; font-weight: bold;">this</span>.<span style="color: #660066;">updateInput</span><span style="color: #009900;">}</span> value<span style="color: #339933;">=</span><span style="color: #009900;">{</span><span style="color: #000066; font-weight: bold;">this</span>.<span style="color: #660066;">state</span>.<span style="color: #660066;">text</span><span style="color: #009900;">}</span> type<span style="color: #339933;">=</span><span style="color: #3366CC;">"text"</span> placeholder<span style="color: #339933;">=</span><span style="color: #3366CC;">"Your message"</span> <span style="color: #339933;">/&gt;</span>
+        <span style="color: #339933;">&lt;</span>input type<span style="color: #339933;">=</span><span style="color: #3366CC;">"submit"</span> value<span style="color: #339933;">=</span><span style="color: #3366CC;">"Send"</span> <span style="color: #339933;">/&gt;</span>
+      <span style="color: #339933;">&lt;/</span>form<span style="color: #339933;">&gt;</span>
+    <span style="color: #339933;">&lt;/</span>div<span style="color: #339933;">&gt;;</span>
+  <span style="color: #009900;">}</span>
+<span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span></pre></td></tr></tbody></table></div>
+
+<p>Like before, we need to load React using require. When using Browserify (or Node.js), each module is <em>isolated</em>. This means if we declare or require something in one file, it will only be available within that file. Because we need access to <code>ChatMessage</code>, we require it next. </p>
+<p>Note that when we include code that <em>is not</em> installed via npm, we need to provide a path. In this case, since both <code>Chat.js</code> and <code>ChatMessage.js</code> are within the <code>src/</code> directory, we can say <code>require('./ChatMessage')</code>.</p>
+<p>Remember that we put the <code>ChatMessage</code> component into <code>module.exports</code>. Thanks to that, now that we’ve required the file here, we can use the component. Similar to <code>ChatMessage</code>, we also assign the <code>Chat</code> component into <code>module.exports</code> so that we can load it from elsewhere.</p>
+<p>Finally, we need one more script file.</p>
+<p>Recall that we need to use <code>ReactDOM.render</code> to render the component into HTML. Let’s create one more script file, <code>src/index.js</code></p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="code"><pre class="javascript" style="font-family:monospace;"><span style="color: #000066; font-weight: bold;">var</span> ReactDOM <span style="color: #339933;">=</span> require<span style="color: #009900;">(</span><span style="color: #3366CC;">'react-dom'</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+<span style="color: #000066; font-weight: bold;">var</span> React <span style="color: #339933;">=</span> require<span style="color: #009900;">(</span><span style="color: #3366CC;">'react'</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000066; font-weight: bold;">var</span> Chat <span style="color: #339933;">=</span> require<span style="color: #009900;">(</span><span style="color: #3366CC;">'./Chat'</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+&nbsp;
+ReactDOM.<span style="color: #660066;">render</span><span style="color: #009900;">(</span>
+  <span style="color: #339933;">&lt;</span>Chat <span style="color: #339933;">/&gt;,</span>
+  document.<span style="color: #660066;">getElementById</span><span style="color: #009900;">(</span><span style="color: #3366CC;">'app'</span><span style="color: #009900;">)</span>
+<span style="color: #009900;">)</span><span style="color: #339933;">;</span></pre></td></tr></tbody></table></div>
+
+<p>In this case, we need to load <code>react-dom</code>. Same as <code>react</code>, since we installed this from npm, we can simply use the name of the library when requiring it.</p>
+<p>We also load <code>Chat</code>, for which we need the absolute path version, as it’s a file within our <code>src/</code> directory.</p>
+<p>But why do we load React, even though we’re not using it in this file? Remember that JSX gets compiled by Babel, and the output is <code>React.createElement</code>. If we don’t require react here, then we’ll run into an error later on.</p>
+<p>Other than this, the code is same as before.</p>
+<p>As a side note: The <code>module.exports</code> and <code>require()</code> style modules are known as <em>CommonJS modules</em>. Node.js, Browserify and Webpack all make use of this style. This is not to be confused with a different module style, <em>RequireJS</em>, which is not recommended to be used. An easy way to remember which is which is that it’s “upside down”: CommonJS uses require, RequireJS doesn’t.</p>
+<h3>Setting up Browserify</h3>
+<p>Now we’re in the final step of the process. In order to bundle our code together and make it work in a browser, we just need to run it through Browserify.</p>
+<p>First, install Browserify:</p>
+<p><code>npm install -g browserify</code></p>
+<p>The <code>-g</code> flag makes npm install the package as <em>global</em>, meaning you get access to the <code>browserify</code> command from the command line. You may need to use <code>sudo</code> to run this.</p>
+<p>And lastly, we need the babelify package, which allows browserify to use babel to compile JSX code.</p>
+<p><code>npm install --save babelify babel-preset-react</code></p>
+<p>With all the installations done, we can now bundle and compile the code.</p>
+<p><code>browserify -t [ babelify --presets [ react ] ] src/index.js -o build/app.js</code></p>
+<p>If you run this command, browserify grabs all necessary files, runs them through Babel, and bundles them into <code>build/app.js</code>.</p>
+<p>What’s going on this line? <code>-t</code> flag specifies a <em>transform</em> – that is, we’re telling browserify to use babelify to transform our code. The additional parameters inside the square brackets tell babelify to use the react preset, which means it compiles JSX (and ES6) code into standard JavaScript.</p>
+<p>The parameter after the brackets, <code>src/index.js</code> is the <em>entry point</em>. It’s the piece of code which browserify loads at first. Usually this file will just be the part of your code which does the rendering or other initialization logic.</p>
+<p>The last parameter <code>-o build/app.js</code> tells browserify where we want the output. As we used <code>build/app.js</code> in our HTML, it makes sense to output the bundle there.</p>
+<p>Since the command is a bit of a mouthful to type by hand, let’s make use of npm’s script utility. We can add custom scripts which npm helps us run by adding new properties into the <code>scripts</code> object in <code>package.json</code>:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="code"><pre class="javascript" style="font-family:monospace;">  <span style="color: #3366CC;">"scripts"</span><span style="color: #339933;">:</span> <span style="color: #009900;">{</span>
+    <span style="color: #3366CC;">"test"</span><span style="color: #339933;">:</span> <span style="color: #3366CC;">"echo <span style="color: #000099; font-weight: bold;">\"</span>Error: no test specified<span style="color: #000099; font-weight: bold;">\"</span> &amp;&amp; exit 1"</span><span style="color: #339933;">,</span>
+    <span style="color: #3366CC;">"build"</span><span style="color: #339933;">:</span> <span style="color: #3366CC;">"browserify -t [ babelify --presets [ react ] ] src/index.js -o build/app.js"</span>
+  <span style="color: #009900;">}</span><span style="color: #339933;">,</span></pre></td></tr></tbody></table></div>
+
+<p>If you now run <code>npm run build</code>, the command we put into the scripts object is ran for us. Much easier to remember, don’t you think?</p>
+<h3>What’s next?</h3>
+<p>Now that we’ve got browserify set up, we can start making better use of other libraries. This also speeds up the page load times as we no longer compile our code on-the-fly.</p>
+<p>I’ve created a Github repository for the project. You can <a href="https://github.com/jhartikainen/react-chat-app/tree/v0.0.1">find the code for this article in the v0.0.1 tag</a>.</p>
+<p>In the <a href="http://codeutopia.net/2016/02/01/react-application-data-flow-where-and-how-to-store-your-data/">next article in the series</a>,  we do a bit of refactoring to improve the way we keep track of messages and state. Right now what we’re doing is a bit ad-hoc – we shouldn’t store application state within a component, but next time we’ll sort this out. Fixing it will also make it much easier to add support for multiple chat participants in the future!</p>
+<p>Don’t miss any of the follow-up articles – sign up with the form below!</p>
+<!-- This site is converting visitors into subscribers and customers with OptinMonster - http://optinmonster.com --><div id="om-oxsgddcejzppgzjc-holder"><script type="text/javascript">if(!(window.ga&&ga.create)){(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','__omGaTracker');}</script><div id="om-oxsgddcejzppgzjc" class="optin-monster-saas-overlay portland-background portland-oxsgddcejzppgzjc portland-optin-visible portland-post portland-action" style="display: block;"><style type="text/css" class="om-post-action-styles portland-template-styles">html div#om-oxsgddcejzppgzjc *,html div#om-oxsgddcejzppgzjc *:before,html div#om-oxsgddcejzppgzjc *:after{box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}html div#om-oxsgddcejzppgzjc{background:none;border:0;border-radius:0;-webkit-border-radius:0;-moz-border-radius:0;float:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;height:auto;letter-spacing:normal;outline:none;position:static;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;width:auto;visibility:visible;overflow:visible;margin:0;padding:0;line-height:1;font-family:helvetica,arial,sans-serif;-webkit-box-shadow:none;-moz-box-shadow:none;-ms-box-shadow:none;-o-box-shadow:none;box-shadow:none;-webkit-appearance:none;font-style:normal}html div#om-oxsgddcejzppgzjc .portland-clearfix,html div#om-oxsgddcejzppgzjc .portland-yesno-clearfix,html div#om-oxsgddcejzppgzjc .portland-success-clearfix{clear:both}html div#om-oxsgddcejzppgzjc .portland-clearfix:after,html div#om-oxsgddcejzppgzjc .portland-yesno-clearfix:after,html div#om-oxsgddcejzppgzjc .portland-success-clearfix:after{clear:both;content:".";display:block;height:0;line-height:0;overflow:auto;visibility:hidden;zoom:1}html div#om-oxsgddcejzppgzjc .portland-element-row,html div#om-oxsgddcejzppgzjc .portland-yesno-element-row,html div#om-oxsgddcejzppgzjc .portland-success-element-row{margin-left:auto;margin-right:auto;zoom:1;width:100%}html div#om-oxsgddcejzppgzjc .portland-element-row:before,html div#om-oxsgddcejzppgzjc .portland-yesno-element-row:before,html div#om-oxsgddcejzppgzjc .portland-success-element-row:before,html div#om-oxsgddcejzppgzjc .portland-element-row:after,html div#om-oxsgddcejzppgzjc .portland-yesno-element-row:after,html div#om-oxsgddcejzppgzjc .portland-success-element-row:after{display:table;content:" "}html div#om-oxsgddcejzppgzjc .portland-element-row:after,html div#om-oxsgddcejzppgzjc .portland-yesno-element-row:after,html div#om-oxsgddcejzppgzjc .portland-success-element-row:after{clear:both}html div#om-oxsgddcejzppgzjc .portland-element-row-wrap,html div#om-oxsgddcejzppgzjc .portland-yesno-element-row-wrap,html div#om-oxsgddcejzppgzjc .portland-success-element-row-wrap{position:relative;margin:0}html div#om-oxsgddcejzppgzjc .portland-element-row-content,html div#om-oxsgddcejzppgzjc .portland-yesno-element-row-content,html div#om-oxsgddcejzppgzjc .portland-success-element-row-content{margin-left:auto;margin-right:auto}html div#om-oxsgddcejzppgzjc .portland-element-image,html div#om-oxsgddcejzppgzjc .portland-yesno-element-image,html div#om-oxsgddcejzppgzjc .portland-success-element-image{position:relative}html div#om-oxsgddcejzppgzjc .portland-element-image img,html div#om-oxsgddcejzppgzjc .portland-yesno-element-image img,html div#om-oxsgddcejzppgzjc .portland-success-element-image img{height:auto;max-width:100%;display:block}html div#om-oxsgddcejzppgzjc .om-close,html div#om-oxsgddcejzppgzjc .portland-close,html div#om-oxsgddcejzppgzjc .portland-yesno-close,html div#om-oxsgddcejzppgzjc .portland-success-close{cursor:pointer}html div#om-oxsgddcejzppgzjc.portland-yesno-active .om-close,html div#om-oxsgddcejzppgzjc.portland-yesno-active .portland-close,html div#om-oxsgddcejzppgzjc.portland-yesno-active .portland-yesno-close{display:none}html div#om-oxsgddcejzppgzjc .portland-form label{color:#484848}html div#om-oxsgddcejzppgzjc .portland-form input,html div#om-oxsgddcejzppgzjc .portland-form select,html div#om-oxsgddcejzppgzjc .portland-form textarea{background-color:#fff;width:100%;border:1px solid #ccc;font-size:16px;line-height:24px;padding:10px 6px;overflow:hidden;outline:none;margin:0;vertical-align:middle;height:32px;font-style:normal}html div#om-oxsgddcejzppgzjc .portland-form textarea{height:60px}html div#om-oxsgddcejzppgzjc .portland-form input[type=submit],html div#om-oxsgddcejzppgzjc .portland-form button,html div#om-oxsgddcejzppgzjc .portland-yesno-form button,html div#om-oxsgddcejzppgzjc .portland-success-form button{background:#484848;border:1px solid #484848;width:100%;color:#fff;font-size:20px;padding:12px 6px;line-height:28px;text-align:center;vertical-align:middle;cursor:pointer;margin:0;height:36px;font-style:normal}html div#om-oxsgddcejzppgzjc .portland-form input[type=checkbox],html div#om-oxsgddcejzppgzjc .portland-form input[type=radio]{width:auto!important;outline:invert none medium;padding:0;margin:0;height:auto!important;box-shadow:none;-webkit-box-shadow:none;-moz-box-shadow:none;display:inline}html div#om-oxsgddcejzppgzjc .portland-form input[type=checkbox]{-webkit-appearance:checkbox}html div#om-oxsgddcejzppgzjc .portland-form input[type=radio]{-webkit-appearance:radio}html div#om-oxsgddcejzppgzjc .portland-form .portland-button-yes,html div#om-oxsgddcejzppgzjc .portland-yesno-form .portland-yesno-button-yes,html div#om-oxsgddcejzppgzjc .portland-success-form .portland-success-button-yes{margin-bottom:15px}html div#om-oxsgddcejzppgzjc .portland-form-horizontal .portland-button-yes,html div#om-oxsgddcejzppgzjc .portland-yesno-form-horizontal .portland-yesno-button-yes,html div#om-oxsgddcejzppgzjc .portland-success-form-horizontal .portland-success-button-yes{margin-bottom:0;margin-right:2%}html div#om-oxsgddcejzppgzjc .portland-form .portland-button-no,html div#om-oxsgddcejzppgzjc .portland-yesno-form .portland-yesno-button-no,html div#om-oxsgddcejzppgzjc .portland-success-form .portland-success-button-no{background-color:#666;border-color:#666;margin-bottom:0}html div#om-oxsgddcejzppgzjc .portland-form-horizontal .portland-button-no,html div#om-oxsgddcejzppgzjc .portland-yesno-form-horizontal .portland-yesno-button-no,html div#om-oxsgddcejzppgzjc .portland-success-form-horizontal .portland-success-button-no{margin-right:0}html div#om-oxsgddcejzppgzjc .portland-form-horizontal button,html div#om-oxsgddcejzppgzjc .portland-yesno-form-horizontal button,html div#om-oxsgddcejzppgzjc .portland-success-form-horizontal button{width:49%!important;max-width:none!important}html div#om-oxsgddcejzppgzjc .portland-form-horizontal.portland-has-button button,html div#om-oxsgddcejzppgzjc .portland-yesno-form-horizontal.portland-yesno-has-button button,html div#om-oxsgddcejzppgzjc .portland-success-form-horizontal.portland-success-has-button button{width:50%!important;display:block;margin:0 auto}html div#om-oxsgddcejzppgzjc .portland-segments{margin:0 0 15px}html div#om-oxsgddcejzppgzjc .portland-segments-horizontal{margin:15px 0 0}html div#om-oxsgddcejzppgzjc .portland-segments .portland-segments-title{font-size:16px;display:block;line-height:1}html div#om-oxsgddcejzppgzjc .portland-segments-horizontal .portland-segments-title{display:inline-block;margin-right:10px}html div#om-oxsgddcejzppgzjc .portland-segments .portland-segments-wrap{margin-top:5px}html div#om-oxsgddcejzppgzjc .portland-segments-horizontal .portland-segments-wrap{display:inline-block;margin-top:0}html div#om-oxsgddcejzppgzjc .portland-segments .portland-segment-choice{display:inline-block;margin:0 10px 6px 0;vertical-align:middle}html div#om-oxsgddcejzppgzjc .portland-segments label{font-size:12px;margin-left:4px;vertical-align:middle;line-height:12px}html div#om-oxsgddcejzppgzjc .portland-element-privacy,html div#om-oxsgddcejzppgzjc .portland-yesno-element-privacy,html div#om-oxsgddcejzppgzjc .portland-success-element-privacy{color:#888;font-size:12px;font-family:'Open Sans',sans-serif;text-align:center;margin-top:10px;line-height:1}html div#om-oxsgddcejzppgzjc .portland-body,html div#om-oxsgddcejzppgzjc .portland-yesno-container,html div#om-oxsgddcejzppgzjc .portland-success-container{position:relative;height:100%;transition:opacity .5s ease-in-out;-webkit-transition:opacity .5s ease-in-out;-moz-transition:opacity .5s ease-in-out;-o-transition:opacity .5s ease-in-out;opacity:1}html div#om-oxsgddcejzppgzjc .portland-transition-hidden{opacity:0!important;height:0!important;min-height:0!important;max-height:0!important;overflow:hidden!important;padding:0!important;margin:0!important;border-width:0!important;border-style:none!important}html div#om-oxsgddcejzppgzjc .portland-link.link-type-button,html div#om-oxsgddcejzppgzjc .portland-success-link.link-type-button{display:inline-block;padding:20px;text-align:center;text-decoration:none;border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;font-weight:700;font-size:18px;color:#fff;line-height:1;margin-bottom:25px}.portland-content-lock{color:transparent;text-shadow:rgba(0,0,0,.5) 0 0 10px;-webkit-user-select:none;-moz-user-select:none;user-select:none;pointer-events:none}html div#om-oxsgddcejzppgzjc .portland-close,html div#om-oxsgddcejzppgzjc .portland-yesno-close,html div#om-oxsgddcejzppgzjc .portland-success-close{display:none}html div#om-oxsgddcejzppgzjc .portland-powered-by,html div#om-oxsgddcejzppgzjc .portland-powered-by a{color:#222!important}html div#om-oxsgddcejzppgzjc .portland-body{background:#fff;position:relative;padding:20px;text-align:center;margin:0 auto;max-width:100%;width:100%;white-space:normal}html div#om-oxsgddcejzppgzjc .portland-element-title{font-size:18px;color:#222;width:100%;margin-bottom:15px;text-align:center;font-family:Helvetica,Arial,sans-serif;line-height:1.25}html div#om-oxsgddcejzppgzjc .portland-element-tagline{font-size:16px;line-height:1.25;color:#484848;width:100%;margin-bottom:15px;text-align:center;font-family:Helvetica,Arial,sans-serif}html div#om-oxsgddcejzppgzjc .portland-form input,html div#om-oxsgddcejzppgzjc .portland-form select{background-color:#fff;width:100%;border:1px solid #ddd;font-size:16px;line-height:24px;padding:4px 6px;overflow:hidden;outline:none;margin:0 0 10px;vertical-align:middle;display:inline;color:#222;height:34px}html div#om-oxsgddcejzppgzjc .portland-form input[type=submit],html div#om-oxsgddcejzppgzjc .portland-form button{background:#ff370f;border:1px solid #ff370f;color:#fff;font-size:16px;padding:4px 6px;line-height:24px;text-align:center;vertical-align:middle;cursor:pointer;display:inline;margin:0;width:100%}html div#om-oxsgddcejzppgzjc .portland-success-container{min-height:300px}html div#om-oxsgddcejzppgzjc .portland-success-close{font-size:32px!important;font-family:"HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif!important;color:#282828!important;font-weight:300!important;position:absolute!important;top:0px!important;right:10px!important;background:none!important;text-decoration:none!important;width:auto!important;height:auto!important;display:block!important;line-height:32px!important;padding:0!important;z-index:99999}html div#om-oxsgddcejzppgzjc .portland-success-content{position:absolute;width:100%;height:100%}html div#om-oxsgddcejzppgzjc .portland-success-element-title{font-size:21px;font-family:"HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;color:#282828;font-weight:300;text-align:center;margin:0 auto;padding:0 15px;position:relative;top:50%;transform:translateY(-50%)}@media (min-width:1px) and (max-width:700px){html div#om-oxsgddcejzppgzjc .portland-yesno-form button,html div#om-oxsgddcejzppgzjc .portland-yesno-form-horizontal.portland-yesno-has-button button{float:none;width:100%;max-width:100%;margin-right:0}html div#om-oxsgddcejzppgzjc .portland-yesno-form .portland-yesno-button-yes{margin-bottom:15px}}</style><div id="om-post-action-optin" class="om-post-action om-clearfix om-theme-action portland-outer-wrap" style=""><div id="om-post-action-optin-wrap" class="portland-element-row portland-element-row-global portland-body" data-selectable="true" data-target="#builder-setting-content_bg" style="background-color:#ffffff;"><div id="om-post-action-header" class="portland-clearfix portland-header om-clearfix"><div id="om-post-action-optin-title" class="portland-element-title portland-element" data-element="title"><div class="portland-element-title-wrap"><div id="portland-element-title-content" class="portland-element-title-content" data-editable="true"><span style="font-size:24px;">Do you want to level-up your JavaScript skills and improve the quality of the code you write? Let me show you how unit tests help you achieve that</span></div></div></div></div><div id="om-post-action-content" class="portland-clearfix portland-content om-clearfix"><div id="om-post-action-optin-tagline" class="portland-element-tagline portland-element" data-element="tagline"><div class="portland-element-tagline-wrap"><div id="portland-element-tagline-content" class="portland-element-tagline-content" data-editable="true" data-save="true"><div style="text-align: left;">Sign up for my newsletter and I'll show you...</div> <ul> <li style="text-align: left;">How tests build a safety net, which can help eliminate more than 2x the bugs - without spending huge amounts of time writing them</li> <li style="text-align: left;">How to easily write your first JavaScript unit test with Mocha, even if you have ZERO prior experience</li> <li style="text-align: left;">A technique that makes writing tests easy - many developers never learn this!</li> <li style="text-align: left;">And I'll even tell you my biggest testing mistake so you can avoid it yourself, which has even caused customer data loss</li> </ul></div></div></div></div><div id="om-post-action-footer" class="portland-clearfix portland-footer om-clearfix"><div id="portland-element-form" class="portland-element-form portland-element" data-element="form"><div id="portland-form" class="om-form-area portland-form om-has-name-email portland-has-name-email portland-has-buttons"><div class="portland-form-wrap"><input id="om-post-action-optin-name" name="portland-name" type="text" data-selectable="true" data-target="#builder-setting-name_value" class="portland-field-name" placeholder="Your name" value="" style="color:#484848;font-family:Helvetica;"><input id="om-post-action-optin-email" name="portland-email" type="email" data-selectable="true" data-target="#builder-setting-email_value" class="portland-field-email" placeholder="Your email" value="" style="color:#484848;font-family:Helvetica;"><input id="om-post-action-optin-submit" name="portland-submit" type="submit" data-selectable="true" data-target="#builder-setting-submit_value" class="portland-field-submit" value="Sign Up" style="color:#ffffff;background:#ff370f;border-color:#ff370f;font-family:Helvetica;opacity:;"></div><div class="portland-yesno-wrap" style="display:none"><button id="portland-button-yes" type="button" name="portland-yes" data-selectable="true" data-target="#builder-setting-yes_value" data-action="form" data-type="yes" class="portland-button-yes portland-button-yesno" title="Yes, I Want Access!" style="color:#fff;background:#83c11f;border-color:#83c11f;font-family:Open Sans;opacity:1;">Yes, I Want Access!</button><button id="portland-button-no" type="button" name="portland-no" data-selectable="true" data-target="#builder-setting-no_value" data-action="close" data-type="no" class="portland-button-no portland-button-yesno" title="No Thanks" style="color:#fff;background:#666;border-color:#666;font-family:Open Sans;opacity:1;">No Thanks</button></div></div></div></div></div><div id="portland-success-container" class="optin-monster-saas-success-overlay portland-success-container portland-transition-hidden portland-success-theme-default"><a class="om-close portland-success-element-close portland-success-close" title="Close" style="">×</a><div id="portland-success-content" class="portland-success-clearfix portland-success-content om-clearfix" data-selectable="true" data-target="#builder-setting-success_content_bg" style="background-color:#ffffff;"><div id="om-success-default-optin-title" class="portland-success-element-title portland-success-element optin-monster-saas-success-message" data-element="title"><div class="portland-success-element-title-wrap"><div id="portland-success-element-title-content" class="portland-success-element-title-content" data-editable="true">Thanks for subscribing! Please check your email for further instructions.</div></div></div></div></div></div><!--[if lte IE 9]><script type="text/javascript">var om_ie_browser = true;</script><![endif]--></div></div><script>var oxsgddcejzppgzjc,oxsgddcejzppgzjc_poll=function(){var r=0;return function(n,l){clearInterval(r),r=setInterval(n,l)}}();!function(e,t,n){if(e.getElementById(n)){oxsgddcejzppgzjc_poll(function(){if(window['om_loaded']){if(!oxsgddcejzppgzjc){oxsgddcejzppgzjc=new OptinMonsterApp();return oxsgddcejzppgzjc.init({u:"17610.317023",staging:0,dev:0,beta:0});}}},25);return;}var d=false,o=e.createElement(t);o.id=n,o.src="//a.optnmnstr.com/app/js/api.min.js",o.onload=o.onreadystatechange=function(){if(!d){if(!this.readyState||this.readyState==="loaded"||this.readyState==="complete"){try{d=om_loaded=true;oxsgddcejzppgzjc=new OptinMonsterApp();oxsgddcejzppgzjc.init({u:"17610.317023",staging:0,dev:0,beta:0});o.onload=o.onreadystatechange=null;}catch(t){}}}};(document.getElementsByTagName("head")[0]||document.documentElement).appendChild(o)}(document,"script","omapi-script");</script><!-- / OptinMonster -->
+<p></p><div class="mailmunch-forms-after-post" style="display: none !important;"></div>  
+
+</div>
+
+  </div>
+  
+  <footer class="entry-footer cf">
+  </footer>
+</article>        
+      
+<div id="comments" class="x-comments-area">
+  <div id="disqus_thread"><iframe id="dsq-app1" name="dsq-app1" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/saved_resource(1).html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 1424px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div>
+  <noscript>Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;</noscript>
+</div>        
+    </div>
+
+          
+
+
+  <aside class="x-sidebar right" role="complementary">
+          		<div id="recent-posts-4" class="widget widget_recent_entries">		<h4 class="h-widget">Recent Posts</h4>		<ul>
+					<li>
+				<a href="http://codeutopia.net/blog/2016/09/10/how-many-tests-is-too-many/">How many tests is too many?</a>
+						</li>
+					<li>
+				<a href="http://codeutopia.net/blog/2016/06/29/the-best-resources-to-learn-about-javascript-promises/">The best resources to learn about JavaScript Promises</a>
+						</li>
+					<li>
+				<a href="http://codeutopia.net/blog/2016/06/10/mongoose-models-and-unit-tests-the-definitive-guide/">Mongoose models and unit tests: The definitive guide</a>
+						</li>
+					<li>
+				<a href="http://codeutopia.net/blog/2016/06/03/how-to-unit-test-es6-code/">How to unit test ES6 code?</a>
+						</li>
+					<li>
+				<a href="http://codeutopia.net/blog/2016/05/23/sinon-js-quick-tip-how-to-stubmock-complex-objects-such-as-dom-objects/">Sinon.js quick tip: How to stub/mock complex objects, such as DOM objects</a>
+						</li>
+				</ul>
+		</div>		<div id="archives-4" class="widget widget_archive"><h4 class="h-widget">Archives</h4>		<label class="screen-reader-text" for="archives-dropdown-4">Archives</label>
+		<select id="archives-dropdown-4" name="archive-dropdown" onchange="document.location.href=this.options[this.selectedIndex].value;">
+			
+			<option value="">Select Month</option>
+				<option value="http://codeutopia.net/blog/2016/09/"> September 2016 </option>
+	<option value="http://codeutopia.net/blog/2016/06/"> June 2016 </option>
+	<option value="http://codeutopia.net/blog/2016/05/"> May 2016 </option>
+	<option value="http://codeutopia.net/blog/2016/04/"> April 2016 </option>
+	<option value="http://codeutopia.net/blog/2016/03/"> March 2016 </option>
+	<option value="http://codeutopia.net/blog/2016/02/"> February 2016 </option>
+	<option value="http://codeutopia.net/blog/2016/01/"> January 2016 </option>
+	<option value="http://codeutopia.net/blog/2015/12/"> December 2015 </option>
+	<option value="http://codeutopia.net/blog/2015/11/"> November 2015 </option>
+	<option value="http://codeutopia.net/blog/2015/09/"> September 2015 </option>
+	<option value="http://codeutopia.net/blog/2015/04/"> April 2015 </option>
+	<option value="http://codeutopia.net/blog/2015/03/"> March 2015 </option>
+	<option value="http://codeutopia.net/blog/2015/02/"> February 2015 </option>
+	<option value="http://codeutopia.net/blog/2015/01/"> January 2015 </option>
+	<option value="http://codeutopia.net/blog/2014/12/"> December 2014 </option>
+	<option value="http://codeutopia.net/blog/2014/11/"> November 2014 </option>
+	<option value="http://codeutopia.net/blog/2014/10/"> October 2014 </option>
+	<option value="http://codeutopia.net/blog/2014/09/"> September 2014 </option>
+	<option value="http://codeutopia.net/blog/2014/08/"> August 2014 </option>
+	<option value="http://codeutopia.net/blog/2014/06/"> June 2014 </option>
+	<option value="http://codeutopia.net/blog/2014/02/"> February 2014 </option>
+	<option value="http://codeutopia.net/blog/2013/12/"> December 2013 </option>
+	<option value="http://codeutopia.net/blog/2013/11/"> November 2013 </option>
+	<option value="http://codeutopia.net/blog/2013/08/"> August 2013 </option>
+	<option value="http://codeutopia.net/blog/2013/07/"> July 2013 </option>
+	<option value="http://codeutopia.net/blog/2013/05/"> May 2013 </option>
+	<option value="http://codeutopia.net/blog/2013/04/"> April 2013 </option>
+	<option value="http://codeutopia.net/blog/2013/03/"> March 2013 </option>
+	<option value="http://codeutopia.net/blog/2013/02/"> February 2013 </option>
+	<option value="http://codeutopia.net/blog/2013/01/"> January 2013 </option>
+	<option value="http://codeutopia.net/blog/2012/11/"> November 2012 </option>
+	<option value="http://codeutopia.net/blog/2012/09/"> September 2012 </option>
+	<option value="http://codeutopia.net/blog/2012/07/"> July 2012 </option>
+	<option value="http://codeutopia.net/blog/2012/05/"> May 2012 </option>
+	<option value="http://codeutopia.net/blog/2012/04/"> April 2012 </option>
+	<option value="http://codeutopia.net/blog/2012/03/"> March 2012 </option>
+	<option value="http://codeutopia.net/blog/2012/02/"> February 2012 </option>
+	<option value="http://codeutopia.net/blog/2012/01/"> January 2012 </option>
+	<option value="http://codeutopia.net/blog/2011/12/"> December 2011 </option>
+	<option value="http://codeutopia.net/blog/2011/10/"> October 2011 </option>
+	<option value="http://codeutopia.net/blog/2011/08/"> August 2011 </option>
+	<option value="http://codeutopia.net/blog/2011/07/"> July 2011 </option>
+	<option value="http://codeutopia.net/blog/2011/06/"> June 2011 </option>
+	<option value="http://codeutopia.net/blog/2011/05/"> May 2011 </option>
+	<option value="http://codeutopia.net/blog/2011/04/"> April 2011 </option>
+	<option value="http://codeutopia.net/blog/2011/03/"> March 2011 </option>
+	<option value="http://codeutopia.net/blog/2011/02/"> February 2011 </option>
+	<option value="http://codeutopia.net/blog/2011/01/"> January 2011 </option>
+	<option value="http://codeutopia.net/blog/2010/12/"> December 2010 </option>
+	<option value="http://codeutopia.net/blog/2010/11/"> November 2010 </option>
+	<option value="http://codeutopia.net/blog/2010/10/"> October 2010 </option>
+	<option value="http://codeutopia.net/blog/2010/09/"> September 2010 </option>
+	<option value="http://codeutopia.net/blog/2010/08/"> August 2010 </option>
+	<option value="http://codeutopia.net/blog/2010/07/"> July 2010 </option>
+	<option value="http://codeutopia.net/blog/2010/06/"> June 2010 </option>
+	<option value="http://codeutopia.net/blog/2010/05/"> May 2010 </option>
+	<option value="http://codeutopia.net/blog/2010/04/"> April 2010 </option>
+	<option value="http://codeutopia.net/blog/2010/03/"> March 2010 </option>
+	<option value="http://codeutopia.net/blog/2010/02/"> February 2010 </option>
+	<option value="http://codeutopia.net/blog/2010/01/"> January 2010 </option>
+	<option value="http://codeutopia.net/blog/2009/12/"> December 2009 </option>
+	<option value="http://codeutopia.net/blog/2009/11/"> November 2009 </option>
+	<option value="http://codeutopia.net/blog/2009/10/"> October 2009 </option>
+	<option value="http://codeutopia.net/blog/2009/09/"> September 2009 </option>
+	<option value="http://codeutopia.net/blog/2009/08/"> August 2009 </option>
+	<option value="http://codeutopia.net/blog/2009/07/"> July 2009 </option>
+	<option value="http://codeutopia.net/blog/2009/06/"> June 2009 </option>
+	<option value="http://codeutopia.net/blog/2009/05/"> May 2009 </option>
+	<option value="http://codeutopia.net/blog/2009/04/"> April 2009 </option>
+	<option value="http://codeutopia.net/blog/2009/03/"> March 2009 </option>
+	<option value="http://codeutopia.net/blog/2009/02/"> February 2009 </option>
+	<option value="http://codeutopia.net/blog/2009/01/"> January 2009 </option>
+	<option value="http://codeutopia.net/blog/2008/12/"> December 2008 </option>
+	<option value="http://codeutopia.net/blog/2008/11/"> November 2008 </option>
+	<option value="http://codeutopia.net/blog/2008/10/"> October 2008 </option>
+	<option value="http://codeutopia.net/blog/2008/09/"> September 2008 </option>
+	<option value="http://codeutopia.net/blog/2008/08/"> August 2008 </option>
+	<option value="http://codeutopia.net/blog/2008/07/"> July 2008 </option>
+	<option value="http://codeutopia.net/blog/2008/06/"> June 2008 </option>
+	<option value="http://codeutopia.net/blog/2008/05/"> May 2008 </option>
+	<option value="http://codeutopia.net/blog/2008/04/"> April 2008 </option>
+	<option value="http://codeutopia.net/blog/2008/03/"> March 2008 </option>
+	<option value="http://codeutopia.net/blog/2008/02/"> February 2008 </option>
+	<option value="http://codeutopia.net/blog/2008/01/"> January 2008 </option>
+	<option value="http://codeutopia.net/blog/2007/12/"> December 2007 </option>
+	<option value="http://codeutopia.net/blog/2007/11/"> November 2007 </option>
+	<option value="http://codeutopia.net/blog/2007/10/"> October 2007 </option>
+	<option value="http://codeutopia.net/blog/2007/09/"> September 2007 </option>
+
+		</select>
+		</div>      </aside>
+
+    
+  </div>
+
+
+
+  
+    
+  
+
+  
+    <footer class="x-colophon bottom" role="contentinfo">
+      <div class="x-container max width">
+
+        
+                  <div class="x-social-global"><a href="http://twitter.com/jhartikainen" class="twitter" title="Twitter" target="_blank"><i class="x-icon-twitter-square" data-x-icon="" aria-hidden="true"></i></a><a href="https://plus.google.com/u/0/+JaniHartikainen" class="google-plus" title="Google+" target="_blank"><i class="x-icon-google-plus-square" data-x-icon="" aria-hidden="true"></i></a><a href="https://fi.linkedin.com/in/janihartikainen" class="linkedin" title="LinkedIn" target="_blank"><i class="x-icon-linkedin-square" data-x-icon="" aria-hidden="true"></i></a><a href="http://github.com/jhartikainen" class="github" title="GitHub" target="_blank"><i class="x-icon-github-square" data-x-icon="" aria-hidden="true"></i></a></div>        
+                  <div class="x-colophon-content">
+            <p>Copyright © 2006 - 2016 Jani Hartikainen</p>          </div>
+        
+      </div>
+    </footer>
+
+  
+
+  
+      <div class="x-searchform-overlay">
+        <div class="x-searchform-overlay-inner">
+          <div class="x-container max width">
+            <form method="get" id="searchform" class="form-search center-text" action="http://codeutopia.net/" data-form-processed="true">
+              <label for="s" class="cfc-h-tx tt-upper">Type and Press “enter” to Search</label>
+              <input type="text" id="s" class="search-query cfc-h-tx center-text tt-upper" name="s">
+            </form>
+          </div>
+        </div>
+      </div>
+
+      
+  </div> <!-- END #top.site -->
+
+  
+			<script type="text/javascript">
+				function get_stripe_vars() {
+					return eval( '(' + '{"cancelmessage":"Are you sure you want to cancel your subscription?","nonceinvoices":"63c47c8d61","nonceinvoicedetail":"42809d0a58","noncecoupon":"d6dab41ab1","stripethankyouurl":"http:\/\/codeutopia.net\/index.php\/register\/QUWdfv"}' +')');
+				}
+			</script>
+			<script type="text/javascript">
+jQuery(function($) {
+});
+</script>
+<!-- This site is converting visitors into subscribers and customers with OptinMonster - http://optinmonster.com --><div id="om-rja5c2z1zhub8zyz-holder"><script type="text/javascript">if(!(window.ga&&ga.create)){(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','__omGaTracker');}</script></div><script>var bo1xbhcf2huej3bh,bo1xbhcf2huej3bh_poll=function(){var r=0;return function(n,l){clearInterval(r),r=setInterval(n,l)}}();!function(e,t,n){if(e.getElementById(n)){bo1xbhcf2huej3bh_poll(function(){if(window['om_loaded']){if(!bo1xbhcf2huej3bh){bo1xbhcf2huej3bh=new OptinMonsterApp();return bo1xbhcf2huej3bh.init({u:"17610.322497",staging:0,dev:0,beta:0});}}},25);return;}var d=false,o=e.createElement(t);o.id=n,o.src="//a.optnmnstr.com/app/js/api.min.js",o.onload=o.onreadystatechange=function(){if(!d){if(!this.readyState||this.readyState==="loaded"||this.readyState==="complete"){try{d=om_loaded=true;bo1xbhcf2huej3bh=new OptinMonsterApp();bo1xbhcf2huej3bh.init({u:"17610.322497",staging:0,dev:0,beta:0});o.onload=o.onreadystatechange=null;}catch(t){}}}};(document.getElementsByTagName("head")[0]||document.documentElement).appendChild(o)}(document,"script","omapi-script");</script><!-- / OptinMonster -->
+  <script id="x-disqus-comments-embed-js" type="text/javascript">
+    var disqus_shortname = 'codeutopia';
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  
+  <script id="x-disqus-comments-count-js" type="text/javascript">
+    var disqus_shortname = 'codeutopia';
+    (function () {
+      var s = document.createElement('script'); s.async = true;
+      s.type = 'text/javascript';
+      s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+      (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+  </script>
+
+<script type="text/javascript" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/x-body.min.js"></script>
+<script type="text/javascript" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/comment-reply.min.js"></script>
+<script type="text/javascript" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/cs-body.min.js"></script>
+<script type="text/javascript" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/wp-embed.min.js"></script>
+
+<script type="text/javascript"> 
+ jQuery(function($) { 
+ });
+ </script>
+
+  
+  	    <script type="text/javascript">var omapi_localized = { ajax: 'http://codeutopia.net/wp-admin/admin-ajax.php?optin-monster-ajax-route=1', nonce: 'bf0b3142fe' };</script>
+	    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-394641-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<iframe style="display: none;" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/saved_resource(2).html"></iframe><img src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/saved_resource" width="1" height="1" style="display: none;"><div id="om-rja5c2z1zhub8zyz" class="optin-monster-saas-overlay denver-background denver-rja5c2z1zhub8zyz denver-optin-visible om-has-image denver-has-image denver-lightbox denver-clean-slate" style="position: fixed; z-index: 7371832; top: 0px; left: 0px; zoom: 1; width: 100%; height: 100%; margin: 0px; padding: 0px; overflow: auto; display: none;"><style type="text/css" class="om-lightbox-clean-slate-styles denver-template-styles">html div#om-rja5c2z1zhub8zyz *,html div#om-rja5c2z1zhub8zyz *:before,html div#om-rja5c2z1zhub8zyz *:after{box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}html div#om-rja5c2z1zhub8zyz{background:none;border:0;border-radius:0;-webkit-border-radius:0;-moz-border-radius:0;float:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;height:auto;letter-spacing:normal;outline:none;position:static;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;width:auto;visibility:visible;overflow:visible;margin:0;padding:0;line-height:1;font-family:helvetica,arial,sans-serif;-webkit-box-shadow:none;-moz-box-shadow:none;-ms-box-shadow:none;-o-box-shadow:none;box-shadow:none;-webkit-appearance:none;font-style:normal}html div#om-rja5c2z1zhub8zyz .denver-clearfix,html div#om-rja5c2z1zhub8zyz .denver-yesno-clearfix,html div#om-rja5c2z1zhub8zyz .denver-success-clearfix{clear:both}html div#om-rja5c2z1zhub8zyz .denver-clearfix:after,html div#om-rja5c2z1zhub8zyz .denver-yesno-clearfix:after,html div#om-rja5c2z1zhub8zyz .denver-success-clearfix:after{clear:both;content:".";display:block;height:0;line-height:0;overflow:auto;visibility:hidden;zoom:1}html div#om-rja5c2z1zhub8zyz .denver-element-row,html div#om-rja5c2z1zhub8zyz .denver-yesno-element-row,html div#om-rja5c2z1zhub8zyz .denver-success-element-row{margin-left:auto;margin-right:auto;zoom:1;width:100%}html div#om-rja5c2z1zhub8zyz .denver-element-row:before,html div#om-rja5c2z1zhub8zyz .denver-yesno-element-row:before,html div#om-rja5c2z1zhub8zyz .denver-success-element-row:before,html div#om-rja5c2z1zhub8zyz .denver-element-row:after,html div#om-rja5c2z1zhub8zyz .denver-yesno-element-row:after,html div#om-rja5c2z1zhub8zyz .denver-success-element-row:after{display:table;content:" "}html div#om-rja5c2z1zhub8zyz .denver-element-row:after,html div#om-rja5c2z1zhub8zyz .denver-yesno-element-row:after,html div#om-rja5c2z1zhub8zyz .denver-success-element-row:after{clear:both}html div#om-rja5c2z1zhub8zyz .denver-element-row-wrap,html div#om-rja5c2z1zhub8zyz .denver-yesno-element-row-wrap,html div#om-rja5c2z1zhub8zyz .denver-success-element-row-wrap{position:relative;margin:0}html div#om-rja5c2z1zhub8zyz .denver-element-row-content,html div#om-rja5c2z1zhub8zyz .denver-yesno-element-row-content,html div#om-rja5c2z1zhub8zyz .denver-success-element-row-content{margin-left:auto;margin-right:auto}html div#om-rja5c2z1zhub8zyz .denver-element-image,html div#om-rja5c2z1zhub8zyz .denver-yesno-element-image,html div#om-rja5c2z1zhub8zyz .denver-success-element-image{position:relative}html div#om-rja5c2z1zhub8zyz .denver-element-image img,html div#om-rja5c2z1zhub8zyz .denver-yesno-element-image img,html div#om-rja5c2z1zhub8zyz .denver-success-element-image img{height:auto;max-width:100%;display:block}html div#om-rja5c2z1zhub8zyz .om-close,html div#om-rja5c2z1zhub8zyz .denver-close,html div#om-rja5c2z1zhub8zyz .denver-yesno-close,html div#om-rja5c2z1zhub8zyz .denver-success-close{cursor:pointer}html div#om-rja5c2z1zhub8zyz.denver-yesno-active .om-close,html div#om-rja5c2z1zhub8zyz.denver-yesno-active .denver-close,html div#om-rja5c2z1zhub8zyz.denver-yesno-active .denver-yesno-close{display:none}html div#om-rja5c2z1zhub8zyz .denver-form label{color:#484848}html div#om-rja5c2z1zhub8zyz .denver-form input,html div#om-rja5c2z1zhub8zyz .denver-form select,html div#om-rja5c2z1zhub8zyz .denver-form textarea{background-color:#fff;width:100%;border:1px solid #ccc;font-size:16px;line-height:24px;padding:10px 6px;overflow:hidden;outline:none;margin:0;vertical-align:middle;height:32px;font-style:normal}html div#om-rja5c2z1zhub8zyz .denver-form textarea{height:60px}html div#om-rja5c2z1zhub8zyz .denver-form input[type=submit],html div#om-rja5c2z1zhub8zyz .denver-form button,html div#om-rja5c2z1zhub8zyz .denver-yesno-form button,html div#om-rja5c2z1zhub8zyz .denver-success-form button{background:#484848;border:1px solid #484848;width:100%;color:#fff;font-size:20px;padding:12px 6px;line-height:28px;text-align:center;vertical-align:middle;cursor:pointer;margin:0;height:36px;font-style:normal}html div#om-rja5c2z1zhub8zyz .denver-form input[type=checkbox],html div#om-rja5c2z1zhub8zyz .denver-form input[type=radio]{width:auto!important;outline:invert none medium;padding:0;margin:0;height:auto!important;box-shadow:none;-webkit-box-shadow:none;-moz-box-shadow:none;display:inline}html div#om-rja5c2z1zhub8zyz .denver-form input[type=checkbox]{-webkit-appearance:checkbox}html div#om-rja5c2z1zhub8zyz .denver-form input[type=radio]{-webkit-appearance:radio}html div#om-rja5c2z1zhub8zyz .denver-form .denver-button-yes,html div#om-rja5c2z1zhub8zyz .denver-yesno-form .denver-yesno-button-yes,html div#om-rja5c2z1zhub8zyz .denver-success-form .denver-success-button-yes{margin-bottom:15px}html div#om-rja5c2z1zhub8zyz .denver-form-horizontal .denver-button-yes,html div#om-rja5c2z1zhub8zyz .denver-yesno-form-horizontal .denver-yesno-button-yes,html div#om-rja5c2z1zhub8zyz .denver-success-form-horizontal .denver-success-button-yes{margin-bottom:0;margin-right:2%}html div#om-rja5c2z1zhub8zyz .denver-form .denver-button-no,html div#om-rja5c2z1zhub8zyz .denver-yesno-form .denver-yesno-button-no,html div#om-rja5c2z1zhub8zyz .denver-success-form .denver-success-button-no{background-color:#666;border-color:#666;margin-bottom:0}html div#om-rja5c2z1zhub8zyz .denver-form-horizontal .denver-button-no,html div#om-rja5c2z1zhub8zyz .denver-yesno-form-horizontal .denver-yesno-button-no,html div#om-rja5c2z1zhub8zyz .denver-success-form-horizontal .denver-success-button-no{margin-right:0}html div#om-rja5c2z1zhub8zyz .denver-form-horizontal button,html div#om-rja5c2z1zhub8zyz .denver-yesno-form-horizontal button,html div#om-rja5c2z1zhub8zyz .denver-success-form-horizontal button{width:49%!important;max-width:none!important}html div#om-rja5c2z1zhub8zyz .denver-form-horizontal.denver-has-button button,html div#om-rja5c2z1zhub8zyz .denver-yesno-form-horizontal.denver-yesno-has-button button,html div#om-rja5c2z1zhub8zyz .denver-success-form-horizontal.denver-success-has-button button{width:50%!important;display:block;margin:0 auto}html div#om-rja5c2z1zhub8zyz .denver-segments{margin:0 0 15px}html div#om-rja5c2z1zhub8zyz .denver-segments-horizontal{margin:15px 0 0}html div#om-rja5c2z1zhub8zyz .denver-segments .denver-segments-title{font-size:16px;display:block;line-height:1}html div#om-rja5c2z1zhub8zyz .denver-segments-horizontal .denver-segments-title{display:inline-block;margin-right:10px}html div#om-rja5c2z1zhub8zyz .denver-segments .denver-segments-wrap{margin-top:5px}html div#om-rja5c2z1zhub8zyz .denver-segments-horizontal .denver-segments-wrap{display:inline-block;margin-top:0}html div#om-rja5c2z1zhub8zyz .denver-segments .denver-segment-choice{display:inline-block;margin:0 10px 6px 0;vertical-align:middle}html div#om-rja5c2z1zhub8zyz .denver-segments label{font-size:12px;margin-left:4px;vertical-align:middle;line-height:12px}html div#om-rja5c2z1zhub8zyz .denver-element-privacy,html div#om-rja5c2z1zhub8zyz .denver-yesno-element-privacy,html div#om-rja5c2z1zhub8zyz .denver-success-element-privacy{color:#888;font-size:12px;font-family:'Open Sans',sans-serif;text-align:center;margin-top:10px;line-height:1}html div#om-rja5c2z1zhub8zyz .denver-body,html div#om-rja5c2z1zhub8zyz .denver-yesno-container,html div#om-rja5c2z1zhub8zyz .denver-success-container{position:relative;height:100%;transition:opacity .5s ease-in-out;-webkit-transition:opacity .5s ease-in-out;-moz-transition:opacity .5s ease-in-out;-o-transition:opacity .5s ease-in-out;opacity:1}html div#om-rja5c2z1zhub8zyz .denver-transition-hidden{opacity:0!important;height:0!important;min-height:0!important;max-height:0!important;overflow:hidden!important;padding:0!important;margin:0!important;border-width:0!important;border-style:none!important;position:relative}html div#om-rja5c2z1zhub8zyz .denver-link.link-type-button,html div#om-rja5c2z1zhub8zyz .denver-success-link.link-type-button{display:inline-block;padding:20px;text-align:center;text-decoration:none;border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;font-weight:700;font-size:18px;color:#fff;line-height:1;margin-bottom:25px}html div#om-rja5c2z1zhub8zyz{background:rgb(0,0,0);background:rgba(0,0,0,.7);width:100%;height:100%}html div#om-rja5c2z1zhub8zyz #om-lightbox-clean-slate-optin,html div#om-rja5c2z1zhub8zyz .denver-outer-wrap{background:#fff;display:none;position:absolute;top:50%;left:50%;min-height:175px;max-width:700px;width:100%;z-index:734626274}html div#om-rja5c2z1zhub8zyz .denver-outer-wrap{max-width:714px!important}html div#om-rja5c2z1zhub8zyz .denver-body{border:7px solid #000}html div#om-rja5c2z1zhub8zyz .denver-close{color:#fff;font-weight:bold;position:absolute;top:-7px;right:-7px;font-size:24px;line-height:24px;text-decoration:none!important;font-family:Arial,sans-serif;display:block;padding:8px 12px 2px 8px;background:#000;z-index:1500}html div#om-rja5c2z1zhub8zyz .denver-header{min-height:30px;padding:30px 15px 15px;width:100%;background:#fff}html div#om-rja5c2z1zhub8zyz .denver-element-title{font-size:24px;color:#484848;width:100%;margin:0;text-align:center;font-family:'Open Sans',sans-serif}html div#om-rja5c2z1zhub8zyz .denver-content{padding:15px;background:#fff;display:table;width:100%}html div#om-rja5c2z1zhub8zyz .denver-left,html div#om-rja5c2z1zhub8zyz .denver-right{display:table-cell;vertical-align:middle}html div#om-rja5c2z1zhub8zyz .denver-left{padding-right:15px}html div#om-rja5c2z1zhub8zyz .denver-element-tagline{font-size:18px;line-height:1.25;color:#484848;width:100%;margin:0;font-family:'Open Sans',sans-serif}html div#om-rja5c2z1zhub8zyz .denver-element-bullet ul{padding:0;margin:20px 0}html div#om-rja5c2z1zhub8zyz .denver-element-bullet ul li{margin-left:30px;line-height:1.25;list-style-type:none;position:relative;font-size:16px;color:#484848;margin-bottom:7px;font-family:'Open Sans',sans-serif}html div#om-rja5c2z1zhub8zyz .denver-element-bullet ul li .denver-arrow,html div#om-rja5c2z1zhub8zyz .denver-element-bullet ul li .om-arrow{width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:7px solid #ff6201;display:inline-block;vertical-align:middle;margin-right:8px;margin-top:-1px;text-indent:-9999px}html div#om-rja5c2z1zhub8zyz .denver-image{position:relative;max-width:230px;width:100%;height:auto;margin:0 auto}html div#om-rja5c2z1zhub8zyz .denver-image img{display:block;margin:10px auto;text-align:center;width:100%;height:auto;max-width:230px}html div#om-rja5c2z1zhub8zyz .denver-footer{background:#e9e9e9;border-top:1px solid #bbb;padding:30px 20px}html div#om-rja5c2z1zhub8zyz .denver-form input,html div#om-rja5c2z1zhub8zyz .denver-form select,html div#om-rja5c2z1zhub8zyz .denver-form button{display:inline;max-width:225px;height:36px;border:1px solid #ccc;padding:6px;margin:0 10px 0 0}html div#om-rja5c2z1zhub8zyz .denver-form.denver-has-email input[type=email]{max-width:460px}html div#om-rja5c2z1zhub8zyz .denver-form input[type=submit],html div#om-rja5c2z1zhub8zyz .denver-form button{display:inline;max-width:190px;font-size:16px;padding:6px;line-height:24px;margin:0}html div#om-rja5c2z1zhub8zyz .denver-success-container{min-height:300px}html div#om-rja5c2z1zhub8zyz .denver-success-close{font-size:32px!important;font-family:"HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif!important;color:#282828!important;font-weight:300!important;position:absolute!important;top:0px!important;right:10px!important;background:none!important;text-decoration:none!important;width:auto!important;height:auto!important;display:block!important;line-height:32px!important;padding:0!important;z-index:99999}html div#om-rja5c2z1zhub8zyz .denver-success-content{position:absolute;width:100%;height:100%}html div#om-rja5c2z1zhub8zyz .denver-success-element-title{font-size:21px;font-family:"HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;color:#282828;font-weight:300;text-align:center;margin:0 auto;padding:0 15px;position:relative;top:50%;transform:translateY(-50%)}@media (min-width:1px) and (max-width:700px){html div#om-rja5c2z1zhub8zyz .denver-outer-wrap[style]{position:relative!important;width:100%!important;left:0!important}html div#om-rja5c2z1zhub8zyz .denver-form input,html div#om-rja5c2z1zhub8zyz .denver-form select,html div#om-rja5c2z1zhub8zyz .denver-form textarea,html div#om-rja5c2z1zhub8zyz .denver-form.denver-has-email input[type=email],html div#om-rja5c2z1zhub8zyz .denver-form input[type=submit],html div#om-rja5c2z1zhub8zyz .denver-form button,html div#om-rja5c2z1zhub8zyz .denver-form-horizontal.denver-has-button button,html div#om-rja5c2z1zhub8zyz button{float:none;width:100%;max-width:100%;margin-right:0}html div#om-rja5c2z1zhub8zyz .denver-form .denver-field-name,html div#om-rja5c2z1zhub8zyz .denver-form .denver-field-email,html div#om-rja5c2z1zhub8zyz .denver-form .denver-button-yes{margin-bottom:15px}}@media (min-width:1px) and (max-width:700px){html div#om-rja5c2z1zhub8zyz .denver-yesno-form button,html div#om-rja5c2z1zhub8zyz .denver-yesno-form-horizontal.denver-yesno-has-button button{float:none;width:100%;max-width:100%;margin-right:0}html div#om-rja5c2z1zhub8zyz .denver-yesno-form .denver-yesno-button-yes{margin-bottom:15px}}@media (min-width:1px) and (max-width:700px){html div#om-rja5c2z1zhub8zyz .denver-content,html div#om-rja5c2z1zhub8zyz .denver-left,html div#om-rja5c2z1zhub8zyz .denver-right{float:none;width:100%;max-width:100%;display:block}html div#om-rja5c2z1zhub8zyz .denver-left{margin-bottom:15px}}</style><div id="om-lightbox-clean-slate-optin" class="om-lightbox-clean-slate om-clearfix om-theme-clean-slate denver-outer-wrap" style="display: block; top: 199px; left: 603px; margin-bottom: 0px;"><div id="om-lightbox-clean-slate-optin-wrap" class="denver-element-row denver-element-row-global denver-body" data-selectable="true" data-target="#builder-setting-bg_border" style="background-color:#000000;border-color:#000000;"><a class="om-close denver-element-close denver-close" title="Close" style="background-color:#000000;">×</a><div id="om-lightbox-clean-slate-header" class="denver-clearfix denver-header om-clearfix"><div id="om-lightbox-clean-slate-optin-title" class="denver-element-title denver-element" data-element="title"><div class="denver-element-title-wrap"><div id="denver-element-title-content" class="denver-element-title-content" data-editable="true"><span style="font-size: 26px;"><strong>Learn the #1 tool that makes writing JavaScript unit tests like child's play</strong></span></div></div></div></div><div id="om-lightbox-clean-slate-content" class="denver-clearfix denver-content om-clearfix"><div id="om-lightbox-clean-slate-left" class="denver-left"><div id="om-lightbox-clean-slate-optin-tagline" class="denver-element-tagline denver-element" data-element="tagline"><div class="denver-element-tagline-wrap"><div id="denver-element-tagline-content" class="denver-element-tagline-content" data-editable="true" data-save="true"><span style="font-size: 16px;">Sinon.js solves the hard problems in writing unit tests. To show you how it makes writing unit tests really easy, I've created the Sinon.js in the Real-World guide!<br><br></span><br></div></div></div><div id="om-lightbox-clean-slate-optin-bullets" class="denver-element-bullet denver-element" data-element="bullet"><div class="denver-element-bullet-wrap"><div id="denver-element-bullet-content" class="denver-element-bullet-content" data-editable="true">In this 26 page guide, you'll get...<br><ul><li>- Three real-life examples of using Sinon</li><li>- Testing Ajax with Sinon</li><li>- Testing Node.js HTTP with Sinon</li><li>- Testing setTimeout with Sinon</li><li>- How to best take advantage of Sinon's different features</li><li>- The 5 Sinon.js best practices so you can avoid common problems</li></ul></div></div></div></div><div id="om-lightbox-clean-slate-right" class="denver-right"><div id="om-lightbox-clean-slate-optin-image-container" class="om-image-container om-clearfix denver-element-image denver-element" data-element="image"><div id="denver-image" class="denver-image" data-image-id="main" data-context="lightbox" data-theme="clean-slate"><img class="optin-monster-saas-image optin-monster-saas-image-lightbox-clean-slate denver-element-image-output" src="./Getting started with npm and Browserify in a React project _ CodeUtopia_files/4102761f1ef21460208108-sinon-js-ebook-small.png" alt="4102761f1ef21460208108-sinon-js-ebook-small.png" data-image-id="main" data-context="lightbox" data-theme="clean-slate"></div></div></div></div><div id="om-lightbox-clean-slate-footer" class="denver-clearfix denver-footer om-clearfix" data-selectable="true" data-target="#builder-setting-footer_bg" style="background-color:#e9e9e9;border-top-color:#bbbbbb;"><div id="denver-element-form" class="denver-element-form denver-element" data-element="form"><div id="denver-form" class="om-form-area denver-form om-has-name-email denver-has-name-email denver-form-horizontal denver-has-buttons"><div class="denver-form-wrap"><input id="om-lightbox-clean-slate-optin-name" name="denver-name" type="text" data-selectable="true" data-target="#builder-setting-name_value" class="denver-field-name" placeholder="Your name" value="" style="color:#484848;font-family:Open Sans;"><input id="om-lightbox-clean-slate-optin-email" name="denver-email" type="email" data-selectable="true" data-target="#builder-setting-email_value" class="denver-field-email" placeholder="Your email" value="" style="color:#484848;font-family:Open Sans;"><input id="om-lightbox-clean-slate-optin-submit" name="denver-submit" type="submit" data-selectable="true" data-target="#builder-setting-submit_value" class="denver-field-submit" value="Get my FREE guide" style="color:#ffffff;background:#484848;border-color:#484848;font-family:Open Sans;opacity:;"><div id="denver-element-privacy" class="denver-element-privacy denver-element" data-element="privacy"><div class="denver-element-privacy-wrap" id="om-optin-privacy" style="margin-top:5px;color:#8d9aa1;font-family:Lato;font-size:12px;text-align:center;"><div id="denver-element-privacy-content" class="denver-element-privacy-content" data-editable="true">Your info is only used for this guide, and occasional JavaScript-related mails from me. You can unsubscribe at any time.</div></div></div></div><div class="denver-yesno-wrap" style="display:none"><button id="denver-button-yes" type="button" name="denver-yes" data-selectable="true" data-target="#builder-setting-yes_value" data-action="form" data-type="yes" class="denver-button-yes denver-button-yesno" title="Yes, I Want Access!" style="color:#fff;background:#83c11f;border-color:#83c11f;font-family:Open Sans;opacity:1;">Yes, I Want Access!</button><button id="denver-button-no" type="button" name="denver-no" data-selectable="true" data-target="#builder-setting-no_value" data-action="close" data-type="no" class="denver-button-no denver-button-yesno" title="No Thanks" style="color:#fff;background:#666;border-color:#666;font-family:Open Sans;opacity:1;">No Thanks</button></div></div></div></div></div><div id="denver-success-container" class="optin-monster-saas-success-overlay denver-success-container denver-transition-hidden denver-success-theme-default"><a class="om-close denver-success-element-close denver-success-close" title="Close" style="">×</a><div id="denver-success-content" class="denver-success-clearfix denver-success-content om-clearfix" data-selectable="true" data-target="#builder-setting-success_content_bg" style="background-color:#ffffff;"><div id="om-success-default-optin-title" class="denver-success-element-title denver-success-element optin-monster-saas-success-message" data-element="title"><div class="denver-success-element-title-wrap"><div id="denver-success-element-title-content" class="denver-success-element-title-content" data-editable="true">Thanks! You'll receive an email from me shortly, where you need to confirm your subscription.</div></div></div></div></div></div><!--[if lte IE 9]><script type="text/javascript">var om_ie_browser = true;</script><![endif]--></div></body></html>

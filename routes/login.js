@@ -9,7 +9,7 @@ var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
 
 router.post('/', (req, res, next) => {
-
+  console.log('login route hit!')
   session
     .run( "MATCH (u:User) WHERE u.email = {email} RETURN u", { email: req.body.email })
     .then(function(result) {

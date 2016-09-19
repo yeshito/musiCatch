@@ -1,8 +1,7 @@
-// const SignupForm = React.createClass({
 const React = require('react');
 const ReactDOM = require('react-dom')
 
-  export class SignupForm extends React.Component {
+module.exports = React.createClass({
   render: () => {
     return (
       <form onSubmit={this.onFormSubmit} method="post" action="/signup" className="circleForm seaBg">
@@ -26,5 +25,4 @@ const ReactDOM = require('react-dom')
       </div>
     </form>)
   }
-}
-// });
+})

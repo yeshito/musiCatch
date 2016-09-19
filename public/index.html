@@ -5,16 +5,29 @@
     <title>musiCatch</title>
     <link rel="stylesheet" href="./stylesheets/style.css"></link>
     <link href="https://fonts.googleapis.com/css?family=Pacifico|Shrikhand" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.js"></script>
-    <!-- <script src="./components/signupForm.jsx" type="text/babel"></script>
-    <script src="./components/loginForm.jsx" type="text/babel"></script> -->
-    <script src="./components/formContainer.jsx" type="text/babel"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.js"></script> -->
+    <!-- <script src="./components/signupForm.jsx" type="text/babel"></script> -->
   </head>
   <body>
     <h1 class="title saffron">musi</h1><h1 class="title sea">Catch</h1>
     <h2 class="title2 white">never miss a beat.</h2>
-    <div id="outerDiv"></div>
+    <div class="formContainer">
+      <form method="post" action="/signup" class="circleForm seaBg">
+        <h2 class="black">Signup</h2>
+        <input name="firstName" type="text" required="" placeholder="First Name"></input>
+        <input name="lastName" type="text" required="" placeholder="Last Name"></input>
+        <input name="newEmail" type="text" required="" placeholder="Email"></input>
+        <input name="newPassword" type="password" required="" placeholder="Password"></input>
+        <button type="submit" value="submit">Signup</button>
+      </form>
+      <form method="post" action="/login" class="circleForm saffronBg">
+        <h2 class="black">Login</h2>
+        <input name="email" type="email" required="" placeholder="Email"></input>
+        <input name="password" type="password" required="" placeholder="Password"></input>
+        <button type="submit" value="submit">Log In</button>
+      </form>
+    </div>
   </body>
 </html>

@@ -3,17 +3,21 @@
   <head>
     <meta charset="utf-8">
     <title>Upload</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.js"></script>
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Shrikhand|Abril+Fatface" rel="stylesheet">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/6.1.19/browser.js"></script>
-    <script type="text/babel" src="/javascripts/upload.jsx"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/6.1.19/browser.js"></script> -->
+    <!-- <script type="text/babel" src="/javascripts/upload.jsx"></script> -->
   </head>
   <body>
-    <h1>Upload your XML file here!</h1>
-    <!-- <div id="LoadXML"></div> -->
-    <!-- <form class="" action="index.html" method="post">
-      <input type="file" name="musicLib" accept="text/xml" />
-      <input type="submit">
-    </form> -->
+    <h1 class="sunny title2">Upload your itunes</h1><h1 class="sea title2"> XML </h1><h1 class="sunny title2">file here!</h1>
+    <div class="formContainer">
+      <form class="uploadForm saffronBg" action="/upload" method="post" enctype="multipart/form-data">
+        <h2 class="uploadTitle sea">Upload</h2>
+        <input class="upload sea" type="file" name="musicLib" accept="text/xml" size="40"/>
+        <input class="upload" type="submit" value="send">
+      </form>
+    </div>
   </body>
 </html>
