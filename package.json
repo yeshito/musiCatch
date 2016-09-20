@@ -22,6 +22,7 @@
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "serve-favicon": "~2.3.0",
-    "xml-stream": "^0.4.5"
+    "xml-stream": "^0.4.5",
+    "xml2js": "^0.4.17"
   }
 }

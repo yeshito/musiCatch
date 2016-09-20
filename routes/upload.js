@@ -4,47 +4,32 @@ const path = require('path');
 const busboy = require('connect-busboy');
 const fs = require('fs');
 const bodyParser = require('body-parser');
-require('body-parser-xml')(bodyParser)
-// const xmlStream = require('xml-stream');
-// const bodyParser = require('body-parser');
-// router.use(busboy());
-/* GET upload page. */
-// router.use(busboy({ immediate: true , limits: { files: 1, fileSize: 10000000 } }));
+const xml2js = require('xml2js');
+const parser = new xml2js.Parser();
+
+router.use(busboy({ immediate: true , limits: { files: 1, fileSize: 10000000 } }));
 
 router.get('/', (req, res) => {
-  console.log('req.session.user is: ' + req.session.user)
+  console.log('req.session.user is: ' + req.session.user);
   req.session.user ? res.sendFile('public/upload.html', { root: path.join(__dirname, '../') }) : res.sendFile('public/index.html');
 });
 
 router.post('/', (req, res) => {
-  console.log('req.body is: ' + JSON.stringify(req.body));
-    // var fstream;
-    // req.pipe(req.busboy);
-    // req.busboy.on('file', function (fieldname, file, filename) {
-    //     console.log("Uploading: " + filename);
-    //     console.log(file);
-    //     fstream = fs.createWriteStream(__dirname + '/files/' + filename);
-    //     file.pipe(fstream);
-    //     fstream.on('close', function () {
-    //         res.redirect('back');
-    //     });
-    // });
+    let fstream;
+    req.pipe(req.busboy);
+    req.busboy.on('file', function (fieldname, file, filename) {
+        fstream = fs.createWriteStream(__dirname + '/files/' + req.session.user + filename);
+        file.pipe(fstream);
+        fs.readFile(__dirname + '/files/' + req.session.user + filename, (err, data) => {
+          parser.parseString(data, (err, result) => {
+            console.log('data is: ' + data)
+            // data is the xml string that I want!
+          })
+        })
+        fstream.on('close', function () {
+            res.send('fucking wrote the book!');
+        });
+    });
 });
-// router.post('/', (req, res) => {
-//   console.log('req.body is: ' + JSON.stringify(req.body));
-//   console.log('req.files is: ' + JSON.stringify(req.files));
-//   // req.busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-//   //   // console.log('file is: ' + JSON.stringify(file))
-//   //   // console.log('filename is: ' + JSON.stringify(fieldname));
-//   //   // console.log('req.files is: ' + JSON.stringify(req.files));
-//   // })
-//   // file.on('data', data => {
-//   //   console.log('data is: ' + JSON.stringify(data))
-//   // })
-//   // req.busboy.on('finish', () => {
-//   //
-//   // })
-// })
-
 
 module.exports = router;
