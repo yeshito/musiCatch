@@ -14,7 +14,6 @@ body {
 .title2 {
   font-family: 'Shrikhand';
   margin: 0;
-  display: inline;
 }
 .formContainer {
   display: flex;
