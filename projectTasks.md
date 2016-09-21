@@ -2,22 +2,35 @@
 
 ### BACK-END ###
 - [x] * Setup database schema
-- [ ] * Setup user authentication and authorization using express, bcrypt, and Neo4j
+- [X] * Setup user authentication and authorization using express, bcrypt, and Neo4j
 - [ ] * Once account is created provide instructions for user to export itunes library to xml file and upload the file to their account, parse the xml file for the artist names, and send that from the front-end to the database, associate them with the user and put those artists at the front of the update queue.
 - [ ] * Write api requests for getting a new artist's id, and creating them in the database
 - [ ] * Write api request for getting artists releases and parsing it for most recent and putting them into the database.
-- [ ] * Create worker which sends api requests to itunes api and gets updates on new releases.
-- [ ] * Create worker which takes new releases sends it to db, and gets list of users who need to be notified.
+- [ ] * Create worker which checks for new releases from RSS feed and sends updates to my database
+- [ ] * Create worker which queues up emails to be sent out when new releases match an artist that is liked by a user i the database.
 - [ ] * Create worker which receives messages, usernames, phone numbers, to compose message and put into queue.
 - [ ] * Create worker which goes through queue of update text messages, compiles them and sends them off to Twilio to actually send texts and sends confirmation to server to update in db the date and release that a user was sent an update on.
 
 
+
 ### FRONT-END ###
 - [ ] * Wireframes
-- [ ] * Setup basic home page with account creation and login, with dark them
-- [ ] * Ability to upload xml itunes library file
+- [X] * Setup basic home page with account creation and login, with dark them
+- [X] * Ability to upload xml itunes library file
+- [ ] Stylish Step by step instructions on how to upload your itunes xml library
 - [ ] User dashboard which upon login shows them releases that they were notified about and links to releases.
 - [ ] Use React to allow users to manually add artists to their account, send api requests to get artist id, and send all of the newly added artists to the db to build edges.
+
+~ 80 artists in your itunes library
+
+## Technologies ##
+  * HTML5
+  * CSS3
+  * Javascript
+  * Node/Express
+  * React
+  * Neo4j
+  * Redis
 
 
 ## Database schema for MusiCatch ##
