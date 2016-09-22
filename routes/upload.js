@@ -48,8 +48,10 @@ router.post('/', (req, res) => {
             console.log('sortedArr is: ' + JSON.stringify(sortedArtists));
 
           })
-
+            // deletes xml itunes file after use
+            fs.unlink(filePath);
         });
+
     });
 });
 

@@ -3,7 +3,7 @@
 ### BACK-END ###
 - [x] * Setup database schema
 - [X] * Setup user authentication and authorization using express, bcrypt, and Neo4j
-- [ ] * Once account is created provide instructions for user to export itunes library to xml file and upload the file to their account, parse the xml file for the artist names, and send that from the front-end to the database, associate them with the user and put those artists at the front of the update queue.
+- [X] * Once account is created provide instructions for user to export itunes library to xml file and upload the file to their account, parse the xml file for the artist names, and send that from the front-end to the database, associate them with the user and put those artists at the front of the update queue.
 - [ ] * Write api requests for getting a new artist's id, and creating them in the database
 - [ ] * Write api request for getting artists releases and parsing it for most recent and putting them into the database.
 - [ ] * Create worker which checks for new releases from RSS feed and sends updates to my database
@@ -22,6 +22,9 @@
 - [ ] Use React to allow users to manually add artists to their account, send api requests to get artist id, and send all of the newly added artists to the db to build edges.
 
 ~ 80 artists in your itunes library
+
+### LAST-MINUTE TASKS ###
+- [ ] Change twilio account SID, authtoken etc. to live version in .env file
 
 ## Technologies ##
   * HTML5
