@@ -6,14 +6,28 @@ body {
   background-repeat: cover;
   text-align: center;
 }
+a {
+  text-decoration: none;
+}
+img {
+  width: 35rem;
+}
+.rectContainer {
+  margin: 1rem 1rem 1rem 1rem;
+  display: inline-block;
+  border-radius: 1rem;
+  padding: 0 .7rem .7rem .7rem;
+  box-shadow: #1C1C1C .2rem .2rem;
+}
 .title {
   display: inline-block;
   font-size: 5rem;
   margin: 2rem 0 0 0;
 }
 .title2 {
+  display: inline;
   font-family: 'Shrikhand';
-  margin: 0;
+  margin: 2rem 0 0 0;
 }
 .formContainer {
   display: flex;
@@ -50,15 +64,6 @@ body {
   margin-top: 5rem;
   /*width: 50rem;*/
   /*height: 10rem;*/
-}
-.uploadTitle {
-  font-size: 1.6em;
-  font-family: 'Abril Fatface';
-  color: #D63230;
-}
-.upload {
-  font-size: .7em;
-  font-family: 'Abril Fatface';
 }
 /* Colors */
 .saffron {

@@ -5,6 +5,7 @@ const path = require('path');
 const busboy = require('connect-busboy');
 const fs = require('fs');
 const bodyParser = require('body-parser');
+const request = require('request');
 
 router.use(busboy({ immediate: true , limits: { files: 1, fileSize: 10000000 } }));
 
@@ -14,7 +15,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-
+    res.send('File uploaded!')
     let fstream;
     req.pipe(req.busboy);
     req.busboy.on('file', function (fieldname, file, filename) {
@@ -28,25 +29,38 @@ router.post('/', (req, res) => {
           fs.readFile(filePath , (err, data) => {
 
             let artists = data.toString().match(/<key>Artist<\/key><string>(.*?)<\/string>/g);
-            let uniqueArtists = Array.from(new Set(artists))
-            console.log(JSON.stringify(uniqueArtists));
-
+            let uniqueArtists = Array.from(new Set(artists));
             let trimmedArr = [];
+
             uniqueArtists.forEach( str => {
 
               let trimStr = str.replace(/<key>Artist<\/key><string>|<\/string>/g, '');
 
               if (trimStr.search(/&#38;|,/) !== -1) {
-                trimStr = trimStr.split(/\s?&#38;\s?|\s?,\s?/g);
-                trimmedArr.push(...trimStr);
+                let artistArr = trimStr.split(/\s?&#38;\s?|\s?,\s?/g);
+                let searchArtists = artistArr.map(artist => {
+                  artist.replace(/\s/g, '+');
+                })
+                trimmedArr.push(...searchArtists);
               } else {
-                trimmedArr.push(trimStr);
+                let searchArtist = trimStr.replace(/\s/g, '+');
+                trimmedArr.push(searchArtist);
               }
             })
 
-            let sortedArtists = trimmedArr.sort();
-            console.log('sortedArr is: ' + JSON.stringify(sortedArtists));
+            let finalArtists = Array.from(new Set(trimmedArr));
+            let sortedArtists = finalArtists.sort();
 
+            console.log('sortedArtists is: ' + JSON.stringify(sortedArtists));
+            console.log('sortedArr.length is: ' + sortedArtists.length);
+            // sortedArtists.forEach(artistName => {
+              request
+              .get(`https://itunes.apple.com/search?entity=musicArtist&term=${sortedArtists[0]}`, (error, response, body) => {
+                if (!error && response.statusCode == 200) {
+                  console.log(body) // Show the HTML for the Google homepage.
+                }
+              })
+            // })
           })
             // deletes xml itunes file after use
             fs.unlink(filePath);
