@@ -14,7 +14,8 @@ function checkDb(artistsArr, userId) {
 
   console.log('input artist is: ' + artistsArr[3]);
   // artistsArr.forEach(artist => {
-    checkArtistDb(artistsArr[3])
+    session
+    .run( "MATCH (a:Artist) WHERE a.artistName = {artist} RETURN a.artistId as appleId", { artist: artistsArr[3] })
       .then(result => {
           if (result.records.length === 0) {
             let artistObj = JSON.stringify({artistName: artistsArr[2], userId: userId});
@@ -40,10 +41,6 @@ function checkDb(artistsArr, userId) {
         driver.close();
       })
     // })
-}
-function checkArtistDb(artistName) {
-  return session
-    .run( "MATCH (a:Artist) WHERE a.artistName = {artist} RETURN a.artistId as appleId", { artist: artistName })
 }
 
 module.exports = {
