@@ -4,7 +4,7 @@
 - [x] * Setup database schema
 - [X] * Setup user authentication and authorization using express, bcrypt, and Neo4j
 - [X] * Once account is created provide instructions for user to export itunes library to xml file and upload the file to their account, parse the xml file for the artist names, and send that from the front-end to the database, associate them with the user and put those artists at the front of the update queue.
-- [ ] * Write api requests for getting a new artist's id, and creating them in the database
+- [X] * Write api requests for getting a new artist's id, and creating them in the database
 - [ ] * Write api request for getting artists releases and parsing it for most recent and putting them into the database.
 - [ ] * Create worker which checks for new releases from RSS feed and sends updates to my database
 - [ ] * Create worker which queues up emails to be sent out when new releases match an artist that is liked by a user i the database.
@@ -17,7 +17,7 @@
 - [ ] * Wireframes
 - [X] * Setup basic home page with account creation and login, with dark them
 - [X] * Ability to upload xml itunes library file
-- [ ] Stylish Step by step instructions on how to upload your itunes xml library
+- [X] Stylish Step by step instructions on how to upload your itunes xml library
 - [ ] User dashboard which upon login shows them releases that they were notified about and links to releases.
 - [ ] Use React to allow users to manually add artists to their account, send api requests to get artist id, and send all of the newly added artists to the db to build edges.
 
@@ -44,7 +44,7 @@
   CREATE CONSTRAINT ON (r:Release) ASSERT r.trackId is UNIQUE
   CREATE INDEX ON :User(email)
   CREATE INDEX ON :Artist(artistName)
-  
+
 ### Nodes ###
 
   #### User ####

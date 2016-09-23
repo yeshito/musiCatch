@@ -12,20 +12,19 @@ function checkDb(artistsArr, userId) {
 
   const session = driver.session();
 
-  console.log('input artist is: ' + artistsArr[1]);
+  console.log('input artist is: ' + artistsArr[3]);
   // artistsArr.forEach(artist => {
-    session
-      .run( "MATCH (a:Artist) WHERE a.artistName = {artist} RETURN a.artistId as appleId", {artist: artistsArr[1]})
+    checkArtistDb(artistsArr[3])
       .then(result => {
           if (result.records.length === 0) {
-            let artistObj = JSON.stringify({artistName: artistsArr[1], userId: userId});
+            let artistObj = JSON.stringify({artistName: artistsArr[2], userId: userId});
             redis.lpush('artistNames', artistObj);
           } else {
             console.log('result.records[0].get("appleId"): ' + result.records[0].get("appleId"));
             return session.run("MATCH (a:Artist {artistId: {artistId} }) " +
                               "MATCH (u:User) WHERE ID(u) = {userId} " +
-                              "CREATE UNIQUE (u)-[:LIKES]->(a) " +
-                              "RETURN u", { artistId: result.records[0].get("appleId"), userId: userId})
+                              "CREATE (u)-[r:LIKES]->(a) " +
+                              "RETURN r", { artistId: result.records[0].get("appleId"), userId: userId})
               .then( result => {
               console.log('result is: ' + JSON.stringify(result));
             }).catch(err => {
@@ -35,13 +34,17 @@ function checkDb(artistsArr, userId) {
 
       }).catch(err => {
         console.log(err)
-        session.close();
       }).then( result => {
         getArtistId();
+        session.close();
+        driver.close();
       })
-    })
+    // })
 }
-
+function checkArtistDb(artistName) {
+  return session
+    .run( "MATCH (a:Artist) WHERE a.artistName = {artist} RETURN a.artistId as appleId", { artist: artistName })
+}
 
 module.exports = {
   checkDb: (artistsArr, userId) => {
