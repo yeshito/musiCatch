@@ -23,19 +23,12 @@ function getArtistId() {
         console.log(artistName + ' ' + userId);
         request
         .get(`https://itunes.apple.com/search?entity=musicArtist&term=${artistName}`, (error, response, body) => {
-          console.log('hery')
           if (error) return console.log('step 1 itunes API error: ' + error);
-            console.log(response.statusCode)
+          console.log('hey!')
           if (!error && response.statusCode == 200) {
-            console.log('body is: ' + body);
-            if (body.artistId) {
-              console.log('r')
-              .get(`https://itunes.apple.com/lookup?id=${response.artistId}`, (error, response, body) => {
-                if (!error && response.statusCode == 200) {
-                  console.log('body2: ' + body)
-                }
-              })
-            }
+            let bodyJSON = JSON.parse(body);
+            let artistID = bodyJSON.results[0]['artistId'];
+            // put stuff into neo4j here
           }
         });
       });
