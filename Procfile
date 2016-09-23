@@ -1,2 +1,2 @@
 web: bin/www
-worker: node worker.js
+checkDb: node workers/checkDb.js

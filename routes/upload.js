@@ -6,6 +6,7 @@ const busboy = require('connect-busboy');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const request = require('request');
+const checkDb = require('../workers/checkDb.js').checkDb;
 
 router.use(busboy({ immediate: true , limits: { files: 1, fileSize: 10000000 } }));
 
@@ -38,13 +39,9 @@ router.post('/', (req, res) => {
 
               if (trimStr.search(/&#38;|,/) !== -1) {
                 let artistArr = trimStr.split(/\s?&#38;\s?|\s?,\s?/g);
-                let searchArtists = artistArr.map(artist => {
-                  artist.replace(/\s/g, '+');
-                })
-                trimmedArr.push(...searchArtists);
+                trimmedArr.push(...artistArr);
               } else {
-                let searchArtist = trimStr.replace(/\s/g, '+');
-                trimmedArr.push(searchArtist);
+                trimmedArr.push(trimStr);
               }
             })
 
@@ -53,14 +50,7 @@ router.post('/', (req, res) => {
 
             console.log('sortedArtists is: ' + JSON.stringify(sortedArtists));
             console.log('sortedArr.length is: ' + sortedArtists.length);
-            // sortedArtists.forEach(artistName => {
-              request
-              .get(`https://itunes.apple.com/search?entity=musicArtist&term=${sortedArtists[0]}`, (error, response, body) => {
-                if (!error && response.statusCode == 200) {
-                  console.log(body) // Show the HTML for the Google homepage.
-                }
-              })
-            // })
+            checkDb(sortedArtists, req.session.user);
           })
             // deletes xml itunes file after use
             fs.unlink(filePath);

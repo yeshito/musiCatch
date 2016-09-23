@@ -41,7 +41,7 @@
 ### Nodes ###
 
   #### User ####
-  * id *unique*
+  * id *unique* (assigned by Neo4j)
   * email *unique*
   * password
   * firstName
@@ -50,6 +50,7 @@
   * signupDate
 
   #### Artist ####
+  * id *unique* (assigned by Neo4j)
   * "artistName": "Radiohead",
   * "artistLinkUrl": "https://itunes.apple.com/us/artist/radiohead/id657515?uo=4",
   * "artistId": 657515,

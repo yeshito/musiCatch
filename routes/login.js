@@ -1,15 +1,15 @@
 'use strict';
-var express = require('express');
-var router = express.Router();
-var bcrypt = require('bcrypt');
-var neo4j = require('neo4j-driver').v1;
-var driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "capstone4"));
-var cookieParser = require('cookie-parser');
-var cookieSession = require('cookie-session');
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcrypt');
+const neo4j = require('neo4j-driver').v1;
+const driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "capstone4"));
+const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 
 router.post('/', (req, res, next) => {
 
-  let session = driver.session();
+  const session = driver.session();
   session
     .run( "MATCH (u:User) WHERE u.email = {email} RETURN u", { email: req.body.email })
     .then(result => {

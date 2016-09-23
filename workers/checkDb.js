@@ -1,0 +1,68 @@
+'use strict'
+//Connect to Redis to get queue of people who need to be reminded
+const express = require('express');
+const router = express.Router();
+const redis = require('../db/redis.js');
+const request = require('request')
+const neo4j = require('neo4j-driver').v1;
+const driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "capstone4"));
+const getArtistId = require("./getArtistId.js").getArtistId;
+
+function checkDb(artistsArr, userId) {
+  const session = driver.session();
+
+  console.log('first artist is: ' + artistsArr[0]);
+  // artistsArr.forEach(artist => {
+    session
+      .run( "MATCH (a:Artist) WHERE a.artistName = {artist} RETURN a.artistId as appleId", {artist: artistsArr[0]})
+      .then(result => {
+        console.log('result is: ' + JSON.stringify(result));
+        console.log('result.records.length is: ' + result.records.length);
+          if (result.records.length === 0) {
+            let artistObj = JSON.stringify({artistName: artistsArr[1], userId: userId});
+            redis.lpush('artistNames', artistObj);
+
+          } else {
+            console.log('result.records[0].get("appleId"): ' + result.records[0].get("appleId"));
+            session.run("MATCH (a:Artist {artistId: {artistId} }) " +
+                          "MATCH (u:User) WHERE ID(u) = {userId} " +
+                          "CREATE UNIQUE (u)-[:LIKES]->(a) " +
+                          "RETURN u",
+                          { artistId: result.records[0].get("appleId"), userId: userId})
+              .then((result) => {
+              console.log('result is: ' + JSON.stringify(result));
+            }).catch(err => {
+              console.log(err);
+              session.close();
+            })
+          }
+
+      }).catch(err => {
+        console.log(err)
+        session.close();
+      })
+
+      // session.close();
+      // driver.close();
+    // })
+
+
+
+  // let searchArtists = artistsArr.map(artist => {
+  //   artist.replace(/\s/g, '+');
+  // })
+  //
+  // request
+  // .get(`https://itunes.apple.com/search?entity=musicArtist&term=${artistsArr[0]}`, (error, response, body) => {
+  //   if (!error && response.statusCode == 200) {
+  //     console.log(body) // Show the HTML for the Google homepage.
+  //   }
+  // })
+}
+
+
+module.exports = {
+  checkDb: (artistsArr, userId) => {
+    checkDb(artistsArr, userId);
+  }
+};
