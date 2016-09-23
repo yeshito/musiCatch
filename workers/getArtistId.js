@@ -10,7 +10,6 @@ const driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "capst
 function getArtistId() {
 
   redis.lrangeAsync([ "artistNames", 0, -1]).then( artistNames => {
-  console.log('callback artistNames is: ' + artistNames);
   //We're gonna loop through the number of verify in the queue, but we're not using the verify we got back from the queue
     // for (var i = 0; i < artistNames.length+1; i++) {
     //This operation pulls one out of the queue, so that if we have multiple processes working on the same queue we need to only operate on messages that have not already been removed from the queue.
@@ -27,13 +26,28 @@ function getArtistId() {
           console.log('hey!')
           if (!error && response.statusCode == 200) {
             let bodyJSON = JSON.parse(body);
-            let artistID = bodyJSON.results[0]['artistId'];
-            // put stuff into neo4j here
-          }
+            let artistObj = bodyJSON.results[0];
+            console.log('result.records[0].get("appleId"): ' + result.records[0].get("appleId"));
+            session.run("CREATE (a:Artist { wrapperType: {wrapperType}, artistType: {artistType}, artistName: {artistName}, artistLinkUrl: {artistLinkUrl}, artistId: {artistId}, primaryGenreName: {primaryGenreName}, primaryGenreId: {primaryGenreId} })"
+                      , { wrapperType: {artistObj.wrapperType}, artistType: {artistObj.artistType}, artistName: {artistObj.artistName}, artistLinkUrl: {artistObj.artistLinkUrl}, artistId: {artistObj.artistId}, primaryGenreName: {artistObj.primaryGenreName}, primaryGenreId: {artistObj.primaryGenreId} })
+                      .then( result => {
+                        return session.run("MATCH (a:Artist { artistId: {artistId} }), " +
+                                                  "(u:User) WHERE ID(u) = {userId} " +
+                                            "MERGE (a)-[r:LIKES]->(u)", { artistId: artistObj.artistId, userId: userId })
+                    }), error => {
+                      console.log(error);
+                    })
+
+
+
+
+
         });
       });
     // }
   })
+  // session.close();
+  // driver.close();
 };
 
 module.exports = {

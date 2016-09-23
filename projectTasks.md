@@ -38,6 +38,13 @@
 
 ## Database schema for MusiCatch ##
 
+  #### Schema commands run in Neo4j ####
+  CREATE CONSTRAINT ON (u:User) ASSERT u.email is unique
+  CREATE CONSTRAINT ON (a:Artist) ASSERT a.artistId is UNIQUE
+  CREATE CONSTRAINT ON (r:Release) ASSERT r.trackId is UNIQUE
+  CREATE INDEX ON :User(email)
+  CREATE INDEX ON :Artist(artistName)
+  
 ### Nodes ###
 
   #### User ####

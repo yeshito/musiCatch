@@ -22,11 +22,10 @@ function checkDb(artistsArr, userId) {
             redis.lpush('artistNames', artistObj);
           } else {
             console.log('result.records[0].get("appleId"): ' + result.records[0].get("appleId"));
-            session.run("MATCH (a:Artist {artistId: {artistId} }) " +
-                          "MATCH (u:User) WHERE ID(u) = {userId} " +
-                          "CREATE UNIQUE (u)-[:LIKES]->(a) " +
-                          "RETURN u",
-                          { artistId: result.records[0].get("appleId"), userId: userId})
+            return session.run("MATCH (a:Artist {artistId: {artistId} }) " +
+                              "MATCH (u:User) WHERE ID(u) = {userId} " +
+                              "CREATE UNIQUE (u)-[:LIKES]->(a) " +
+                              "RETURN u", { artistId: result.records[0].get("appleId"), userId: userId})
               .then( result => {
               console.log('result is: ' + JSON.stringify(result));
             }).catch(err => {
@@ -40,9 +39,7 @@ function checkDb(artistsArr, userId) {
       }).then( result => {
         getArtistId();
       })
-      // session.close();
-      // driver.close();
-    // })
+    })
 }
 
 

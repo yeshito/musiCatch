@@ -21,7 +21,7 @@ router.post('/', (req, res, next) => {
       } else {
 
         return session.run("CREATE (u:User { firstName: {firstName}, lastName: {lastName}, email: {email}, password: {hash}, signupDate: {signupDate} }) " +
-                          "RETURN id(u)"
+                          "RETURN id(u) as id"
                           , {firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.newEmail, hash: hash , signupDate: new Date().toString()})
                   .then( user => {
                     let userId = user.records[0]['_fields'][0]['low'];
