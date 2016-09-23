@@ -30,7 +30,7 @@ router.post('/', (req, res, next) => {
         console.log('username not matched!')
       }
       session.close();
-      // driver.close();
+      driver.close();
     }).catch(err => {
       session.close();
       console.log(err)
