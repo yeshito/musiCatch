@@ -65,6 +65,7 @@
   * "primaryGenreName": "Alternative",
   * "primaryGenreId": 20
 
+
   #### Release ####
   "wrapperType": "track",
   "kind": "music-video",
@@ -88,6 +89,11 @@
   "country": "USA",
   "currency": "USD",
   "primaryGenreName": "Alternative"
+
+properties with objects inside:
+content:Encoded
+category
+coverArt
 
 ### Edges ###
   (Artist)-RELEASED->(Release)

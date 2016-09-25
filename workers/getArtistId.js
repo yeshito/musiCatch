@@ -20,12 +20,19 @@ function getArtistId() {
         let artistName = artistObj['artistName'].replace(/\s/g, '+');
         let userId = artistObj['userId'];
         console.log(artistName + ' ' + userId);
+
         request
         .get(`https://itunes.apple.com/search?entity=musicArtist&term=${artistName}`, (error, response, body) => {
-          if (error) return console.log('step 1 itunes API error: ' + error);
+          if (error) {
+            session.close();
+            driver.close();
+            return console.log('step 1 itunes API error: ' + error);
+          }
+
           if (!error && response.statusCode == 200) {
             let bodyJSON = JSON.parse(body);
             let artistObj = bodyJSON.results[0];
+            console.log(JSON.stringify(artistObj))
             session.run("CREATE (a:Artist { wrapperType: {wrapperType}, artistType: {artistType}, artistName: {artistName}, artistLinkUrl: {artistLinkUrl}, artistId: {artistId}, primaryGenreName: {primaryGenreName}, primaryGenreId: {primaryGenreId} })"
                       , { wrapperType: artistObj.wrapperType, artistType: artistObj.artistType, artistName: artistObj.artistName, artistLinkUrl: artistObj.artistLinkUrl, artistId: artistObj.artistId, primaryGenreName: artistObj.primaryGenreName, primaryGenreId: artistObj.primaryGenreId })
                       .then( result => {
@@ -34,17 +41,20 @@ function getArtistId() {
                                             "MERGE (a)-[r:LIKES]->(u)", { artistId: artistObj.artistId, userId: userId })
                     }).then( result => {
                       console.log(result);
+                      session.close();
+                      driver.close();
                     }).catch( err => {
                       console.log(err);
-                    })
+                      session.close();
+                      driver.close();
+                    });
           };
-      });
+      })
     })
-  // }
+    // }
   })
-  session.close();
-  driver.close();
-}
+};
+
 module.exports = {
   getArtistId: () => {
     getArtistId();

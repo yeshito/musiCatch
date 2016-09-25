@@ -18,7 +18,7 @@ function checkDb(artistsArr, userId) {
     .run( "MATCH (a:Artist) WHERE a.artistName = {artist} RETURN a.artistId as appleId", { artist: artistsArr[3] })
       .then(result => {
           if (result.records.length === 0) {
-            let artistObj = JSON.stringify({artistName: artistsArr[2], userId: userId});
+            let artistObj = JSON.stringify({artistName: artistsArr[3], userId: userId});
             redis.lpush('artistNames', artistObj);
           } else {
             console.log('result.records[0].get("appleId"): ' + result.records[0].get("appleId"));
@@ -37,8 +37,8 @@ function checkDb(artistsArr, userId) {
         console.log(err)
       }).then( result => {
         getArtistId();
-        session.close();
-        driver.close();
+        // session.close();
+        // driver.close();
       })
     // })
 }
