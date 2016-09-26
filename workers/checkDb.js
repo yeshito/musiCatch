@@ -16,7 +16,7 @@ function checkDb(artistsArr, userId) {
   // artistsArr.forEach(artist => {
     session
     .run( "MATCH (a:Artist) WHERE a.artistName = {artist} RETURN a.artistId as appleId", { artist: artistsArr[3] })
-      .then(result => {
+      .then( result => {
           console.log(JSON.stringify(result))
           if (result.records.length === 0) {
             let artistObj = JSON.stringify({artistName: artistsArr[3], userId: userId});

@@ -32,7 +32,7 @@ function getArtistId() {
           if (!error && response.statusCode == 200) {
             let bodyJSON = JSON.parse(body);
             let artistObj = bodyJSON.results[0];
-            console.log(JSON.stringify(artistObj))
+
             session.run("CREATE (a:Artist { wrapperType: {wrapperType}, artistType: {artistType}, artistName: {artistName}, artistLinkUrl: {artistLinkUrl}, artistId: {artistId}, primaryGenreName: {primaryGenreName}, primaryGenreId: {primaryGenreId} })"
                       , { wrapperType: artistObj.wrapperType, artistType: artistObj.artistType, artistName: artistObj.artistName, artistLinkUrl: artistObj.artistLinkUrl, artistId: artistObj.artistId, primaryGenreName: artistObj.primaryGenreName, primaryGenreId: artistObj.primaryGenreId })
                       .then( result => {
