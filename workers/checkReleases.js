@@ -29,7 +29,6 @@ request('https://itunes.apple.com/WebObjects/MZStore.woa/wpa/MRSS/newreleases/sf
       session
       .run( "MATCH (l:lastReleaseCheck) RETURN l.date AS lastDate")
       .then( record => {
-
         let lastDate = record.records[0].get("lastDate");
         let dummyDate = 1474320695;
 
@@ -43,15 +42,13 @@ request('https://itunes.apple.com/WebObjects/MZStore.woa/wpa/MRSS/newreleases/sf
 
           // let release0 = result.rss.channel[0].item[0]
           // let release1 = result.rss.channel[0].item[1]
-          let release = result.rss.channel[0].item[4]
+          let release = result.rss.channel[0].item[8];
 
           // releasesArr.forEach( release => {
           // If release is more recent then last time release were checked add to Db
             if (Date.parse(release.pubDate[0]) > dummyDate) {
 
-              var releaseArtistId = release['itms:artistLink'][0].match(/id(\d+)\?/)[1];
-              console.log('releaseArtistId is: ' + releaseArtistId)
-              console.log('itms:artist is: ' + release['itms:artist']);
+              let releaseArtistId = release['itms:artistLink'][0].match(/id(\d+)\?/)[1];
 
               return session
               .run("CREATE (r:Release { title: {title}, link: {link}, description: {description}, pubDate: {pubDate}, contentEncoded: {contentEncoded}, category: {category}, " +
@@ -60,15 +57,21 @@ request('https://itunes.apple.com/WebObjects/MZStore.woa/wpa/MRSS/newreleases/sf
                  { title: release.title[0], link: release.link[0], description: release.description[0], pubDate: release.pubDate[0], contentEncoded: release['content:encoded'][0],
                    category: release.category[0]['_'], artist: release['itms:artist'][0], artistLink: release['itms:artistLink'][0], album: release['itms:album'][0], albumLink: release['itms:albumLink'][0],
                    albumPrice: release['itms:albumPrice'][0], coverArt: release['itms:coverArt'][2]['_'], rights: release['itms:rights'][0], releaseDate: release['itms:releasedate'][0] })
-                   .then( record => {
-                     console.log(record);
-                     let releaseId = record.records[0].get("releaseId");
+                   .then( result => {
+                     console.log('record after creating release is: ' + JSON.stringify(result))
+                     let releaseId = result.records[0].get("releaseId");
                      console.log('releaseId is: ' + releaseId);
+                     console.log('releaseArtistId is: ' + releaseArtistId);
                      return session
-                     .run( "MATCH (a:Artist) WHERE a.artistId = {releaseArtistId} RETURN a.artistId as appleId", { releaseArtistId: releaseArtistId })
+                     .run( "MATCH (a:Artist) WHERE a.releaseArtistId = {releaseArtistId} RETURN a.releaseArtistId AS appleId", { releaseArtistId: parseInt(releaseArtistId, 10) } )
                      .then( record => {
+                        console.log('record after matching artist' + JSON.stringify(record))
+
+                        console.log('record.records[0].get("appleId"): ' + record.records[0].get("appleId"))
 
                          if (record.records.length === 0) {
+                          //  console.log('record.records.length === 0 is hit!')
+                          //  console.log('releaseArtistId is: ' + releaseArtistId)
                            request
                            .get(`https://itunes.apple.com/lookup?id=${releaseArtistId}`, (error, response, body) => {
 
@@ -76,24 +79,25 @@ request('https://itunes.apple.com/WebObjects/MZStore.woa/wpa/MRSS/newreleases/sf
                              if (!error && response.statusCode == 200) {
                                let bodyJSON = JSON.parse(body);
                                let artistObj = bodyJSON.results[0];
-                               console.log(JSON.stringify(artistObj))
+                              //  console.log(JSON.stringify(artistObj))
 
                              return session.run("CREATE (a:Artist { wrapperType: {wrapperType}, artistType: {artistType}, artistName: {artistName}, artistLinkUrl: {artistLinkUrl}, artistId: {artistId}, primaryGenreName: {primaryGenreName}, primaryGenreId: {primaryGenreId} })"
                                          , { wrapperType: artistObj.wrapperType, artistType: artistObj.artistType, artistName: artistObj.artistName, artistLinkUrl: artistObj.artistLinkUrl, artistId: artistObj.artistId, primaryGenreName: artistObj.primaryGenreName, primaryGenreId: artistObj.primaryGenreId })
-                                         .then( result => {
-
-                                           return session.run("MATCH (a:Artist { artistId: {artistId} }), " +
-                                                              "(r:RELEASE) WHERE ID(r) = {releaseId} " +
-                                                              "CREATE (a)-[e:RELEASED]->(r)", { releaseId: releaseId, artistId: releaseArtistId })
-                                       }).then( result => {
-                                         console.log(result);
+                                         .then( record => {
+                                          //  console.log("record after creating artist" + JSON.stringify(record))
+                                           return session.run("MATCH (a:Artist { artistId: {artistId} }) " +
+                                                              "MATCH (r:RELEASE) WHERE ID(r) = {releaseId} " +
+                                                              "CREATE (a)-[e:RELEASED]->(r) " +
+                                                              "RETURN e", { releaseId: releaseId, artistId: releaseArtistId })
+                                       }).then( record => {
+                                        //  console.log('record after creating relationship between artist and release' + JSON.stringify(record));
                                        }).catch( err => {
                                          console.log(err);
                                        })
                              };
                            });
                          } else {
-                           console.log('result.records[0].get("appleId"): ' + record.records[0].get("appleId"));
+                          //  console.log('result.records[0].get("appleId"): ' + record.records[0].get("appleId"));
                            return session.run("MATCH (a:Artist {artistId: {artistId} }) " +
                                              "(r:RELEASE) WHERE ID(r) = {releaseId} " +
                                              "CREATE (a)-[r:RELEASED]->(r)" , { artistId: releaseArtistId, userId: userId})
@@ -117,6 +121,8 @@ request('https://itunes.apple.com/WebObjects/MZStore.woa/wpa/MRSS/newreleases/sf
           session.close();
           driver.close();
         }).catch(err => {
+
+
           console.log(err)
         })
 
