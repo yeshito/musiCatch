@@ -8,6 +8,7 @@ const neo4j = require('neo4j-driver').v1;
 const driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "capstone4"));
 const fs = require('fs');
 const parseString = require('xml2js').parseString;
+const sendNotifications = require('./sendNotifications.js').sendNotifications;
 
 request('https://itunes.apple.com/WebObjects/MZStore.woa/wpa/MRSS/newreleases/sf=143441/limit=100/explicit=true/rss.xml', (error, response, body) => {
 
@@ -118,6 +119,9 @@ request('https://itunes.apple.com/WebObjects/MZStore.woa/wpa/MRSS/newreleases/sf
                                                                       release: { name: release['itms:album'][0], artist: release['itms:artist'][0], coverArt: release['itms:coverArt'][2]['_'], link: release['itms:albumLink'][0], } }
 
                                            redis.lpush('notificationList', JSON.stringify(notificationObj));
+                                           sendNotifications();
+                                           session.close();
+                                           driver.close();
                                          })
                                        }
 
