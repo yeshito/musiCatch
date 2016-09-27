@@ -42,8 +42,8 @@ request('https://itunes.apple.com/WebObjects/MZStore.woa/wpa/MRSS/newreleases/sf
 
           // let release0 = result.rss.channel[0].item[0]
           // let release1 = result.rss.channel[0].item[1]
-          let release = result.rss.channel[0].item[14];
-
+          let release = result.rss.channel[0].item[15];
+          console.log(JSON.stringify(release));
           // releasesArr.forEach( release => {
           // If release is more recent then last time release were checked add to Db
             if (Date.parse(release.pubDate[0]) > dummyDate) {
@@ -85,13 +85,13 @@ request('https://itunes.apple.com/WebObjects/MZStore.woa/wpa/MRSS/newreleases/sf
                                             artistId: artistObj.artistId, primaryGenreName: artistObj.primaryGenreName, primaryGenreId: artistObj.primaryGenreId })
                                          .then( record => {
                                            console.log("record after creating artist" + JSON.stringify(record))
-                                           console.log("releaseArtistId is: " + releaseArtistId, "releaseId is: " + releaseId)
-                                           console.log("typeof releaseArtistId: " + typeof releaseArtistId, "typeof releaseId: " + releaseId )
-                                           return session.run("MATCH (a:Artist { artistId: {artistId} }) " +
-                                                              "MATCH (r:Release) WHERE ID(r) = " + releaseId + " " +
-                                                              "MERGE (a)-[:RELEASED]->(r)", { artistId: releaseArtistId })
+                                          //  console.log("releaseArtistId is: " + releaseArtistId, "releaseId is: " + releaseId)
+                                          //  console.log("typeof releaseArtistId: " + typeof releaseArtistId, "typeof releaseId: " + releaseId )
+                                          //  return session.run("MATCH (a:Artist { artistId: {artistId} }) " +
+                                          //                     "MATCH (r:Release) WHERE ID(r) = " + releaseId + " " +
+                                          //                     "MERGE (a)-[:RELEASED]->(r)", { artistId: releaseArtistId })
                                        }).then( record => {
-                                         console.log('record after creating relationship between artist and release' + JSON.stringify(record));
+                                        //  console.log('record after creating relationship between artist and release' + JSON.stringify(record));
                                        }).catch( err => {
                                          console.log(err);
                                        })
@@ -106,6 +106,24 @@ request('https://itunes.apple.com/WebObjects/MZStore.woa/wpa/MRSS/newreleases/sf
                                              "MERGE (a)-[:RELEASED]->(r)", { artistId: releaseArtistId })
                              .then( record => {
                              console.log('record is: ' + JSON.stringify(record));
+                               return session.run("MATCH (n:User)-[:LIKES]-(a:Artist { artistId: {artistId} }) " +
+                                                   "RETURN n", { artistId: 153159 })
+                                     .then( record => {
+                                       console.log('releaseId is: ' + releaseId)
+                                       if(record.records.length > 0) {
+
+                                         record.records.forEach( user => {
+                                           let userProps = user['_fields'][0]['properties'];
+                                           let notificationObj = { user: { id: user['_fields'][0]['identity']['low'], firstName: userProps.lastName, cellNum: userProps.cellNum, email: userProps.email },
+                                                                      release: { name: release['itms:album'][0], artist: release['itms:artist'][0], coverArt: release['itms:coverArt'][2]['_'], link: release['itms:albumLink'][0], } }
+
+                                           redis.lpush('notificationList', JSON.stringify(notificationObj));
+                                         })
+                                       }
+
+                                     }).catch( err => {
+                                       console.log(err)
+                                     })
                            }).catch( err => {
                              console.log('here is the error!')
                              console.log(err);
