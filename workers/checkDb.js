@@ -38,8 +38,8 @@ function checkDb(artistsArr, userId) {
         console.log(err)
       }).then( result => {
         getArtistId();
-        // session.close();
-        // driver.close();
+        session.close();
+        driver.close();
       })
     // })
 }

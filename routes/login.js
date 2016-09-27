@@ -33,6 +33,7 @@ router.post('/', (req, res, next) => {
       driver.close();
     }).catch(err => {
       session.close();
+      driver.close();
       console.log(err)
     })
 })

@@ -20,7 +20,7 @@ router.post('/', (req, res, next) => {
         res.send('email already exists!');
       } else {
 
-        return session.run("CREATE (u:User { firstName: {firstName}, lastName: {lastName}, email: {email}, cellNum: {cellNum}, password: {hash}, signupDate: {signupDate} }) " +
+        return session.run("CREATE (u:User { firstName: {firstName}, email: {email}, cellNum: {cellNum}, password: {hash}, signupDate: {signupDate} }) " +
                           "RETURN id(u) as id"
                           , { firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.newEmail, cellNum: req.body.newCellNum, hash: hash , signupDate: new Date().toString() })
                   .then( user => {

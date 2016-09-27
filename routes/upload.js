@@ -12,11 +12,11 @@ router.use(busboy({ immediate: true , limits: { files: 1, fileSize: 10000000 } }
 
 router.get('/', (req, res) => {
   console.log('req.session.user is: ' + req.session.user);
-  req.session.user ? res.sendFile('public/upload.html', { root: path.join(__dirname, '../') }) : res.sendFile('public/index.html');
+  req.session.user ? res.sendFile('public/upload.html', { root: path.join(__dirname, '../') }) : res.sendFile('public/index.html', { root: path.join(__dirname, '../') });
 });
 
 router.post('/', (req, res) => {
-    res.send('File uploaded!')
+    res.sendFile('public/dashboard.html', { root: path.join(__dirname, '../') } );
     let fstream;
     req.pipe(req.busboy);
     req.busboy.on('file', function (fieldname, file, filename) {
@@ -57,7 +57,6 @@ router.post('/', (req, res) => {
         });
 
     });
-    res.redirect('/dashboard')
 });
 
 module.exports = router;
