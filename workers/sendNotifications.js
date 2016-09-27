@@ -14,11 +14,11 @@ function sendNotifications() {
 
         if (notificationObj.user.cellNum) {
           console.log('cellNum: ' + notificationObj.user.cellNum.replace(/-/g, ''))
-
+          console.log(notificationObj.user.firstName, notificationObj.user.firstName, notificationObj.release.name, notificationObj.release.link)
           client.messages.create({
               to:'+1' + notificationObj.user.cellNum.replace(/-/g, ''), // Any number Twilio can deliver to
               from: '+15005550006', // A number you bought from Twilio and can use for outbound communication
-              body: `Hi ${notificationObj.user.firstName}, ${notificationObj.release.artist} has a new release ${notificationObj.release.name}. Check it out: ${notificationObj.release.link} . Cheers from musiCatch.` // body of the SMS message
+              body: `Hi ${notificationObj.user.firstName}, ${notificationObj.user.firstName} has a new release ${notificationObj.release.name}. Check it out: ${notificationObj.release.link} . Cheers from musiCatch.` // body of the SMS message
               // mediaUrl: notificationObj.release.coverArt
           }, (err, responseData) => { //this function is executed when a response is received from Twilio
 

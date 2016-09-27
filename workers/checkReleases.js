@@ -86,13 +86,27 @@ request('https://itunes.apple.com/WebObjects/MZStore.woa/wpa/MRSS/newreleases/sf
                                             artistId: artistObj.artistId, primaryGenreName: artistObj.primaryGenreName, primaryGenreId: artistObj.primaryGenreId })
                                          .then( record => {
                                            console.log("record after creating artist" + JSON.stringify(record))
-                                          //  console.log("releaseArtistId is: " + releaseArtistId, "releaseId is: " + releaseId)
-                                          //  console.log("typeof releaseArtistId: " + typeof releaseArtistId, "typeof releaseId: " + releaseId )
-                                          //  return session.run("MATCH (a:Artist { artistId: {artistId} }) " +
-                                          //                     "MATCH (r:Release) WHERE ID(r) = " + releaseId + " " +
-                                          //                     "MERGE (a)-[:RELEASED]->(r)", { artistId: releaseArtistId })
+                                           console.log("releaseArtistId is: " + releaseArtistId, "releaseId is: " + releaseId)
+                                           console.log("typeof releaseArtistId: " + typeof releaseArtistId, "typeof releaseId: " + releaseId )
+                                           return session.run("MATCH (a:Artist { artistId: {artistId} }) " +
+                                                              "MATCH (r:Release) WHERE ID(r) = " + releaseId + " " +
+                                                              "MERGE (a)-[:RELEASED]->(r)", { artistId: releaseArtistId })
                                        }).then( record => {
-                                        //  console.log('record after creating relationship between artist and release' + JSON.stringify(record));
+                                         return session.run("MATCH (n:User)-[:LIKES]-(a:Artist { artistId: {artistId} }) " +
+                                                             "RETURN n", { artistId: 153159 })
+                                               .then( record => {
+                                                 console.log('releaseId is: ' + releaseId)
+                                                 if(record.records.length > 0) {
+
+                                                   record.records.forEach( user => {
+                                                     let userProps = user['_fields'][0]['properties'];
+                                                     let notificationObj = { user: { id: user['_fields'][0]['identity']['low'], firstName: userProps.lastName, cellNum: userProps.cellNum, email: userProps.email },
+                                                                                release: { name: release['itms:album'][0], artist: release['itms:artist'][0], coverArt: release['itms:coverArt'][2]['_'], link: release['itms:albumLink'][0], } }
+
+                                                     redis.lpush('notificationList', JSON.stringify(notificationObj));
+                                                     sendNotifications();
+                                                     session.close();
+                                                     driver.close();
                                        }).catch( err => {
                                          console.log(err);
                                        })
