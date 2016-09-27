@@ -8,8 +8,10 @@ const logger = require('morgan');
 // const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
-const dotenv = require('dotenv').config();
 
+if (process.env.NODE_ENV === 'development') {
+  const dotenv = require('dotenv').config();
+}
 
 // Create a session with express-session
 const exprSession = require('express-session');
@@ -51,6 +53,7 @@ app.use(exprSession({
   resave: true,
   saveUninitialized: true
 }));
+
 // app.use(cookieParser());
 // app.use(cookieSession({
 //   name: 'session',

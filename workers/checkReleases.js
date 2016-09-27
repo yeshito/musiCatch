@@ -92,21 +92,29 @@ request('https://itunes.apple.com/WebObjects/MZStore.woa/wpa/MRSS/newreleases/sf
                                                               "MATCH (r:Release) WHERE ID(r) = " + releaseId + " " +
                                                               "MERGE (a)-[:RELEASED]->(r)", { artistId: releaseArtistId })
                                        }).then( record => {
-                                         return session.run("MATCH (n:User)-[:LIKES]-(a:Artist { artistId: {artistId} }) " +
-                                                             "RETURN n", { artistId: 153159 })
-                                               .then( record => {
-                                                 console.log('releaseId is: ' + releaseId)
-                                                 if(record.records.length > 0) {
+                                         console.log('record is: ' + JSON.stringify(record));
+                                           return session.run("MATCH (n:User)-[:LIKES]-(a:Artist { artistId: {artistId} }) " +
+                                                               "RETURN n", { artistId: 153159 })
+                                                 .then( record => {
+                                                   console.log('releaseId is: ' + releaseId)
+                                                   if(record.records.length > 0) {
 
-                                                   record.records.forEach( user => {
-                                                     let userProps = user['_fields'][0]['properties'];
-                                                     let notificationObj = { user: { id: user['_fields'][0]['identity']['low'], firstName: userProps.lastName, cellNum: userProps.cellNum, email: userProps.email },
-                                                                                release: { name: release['itms:album'][0], artist: release['itms:artist'][0], coverArt: release['itms:coverArt'][2]['_'], link: release['itms:albumLink'][0], } }
+                                                     record.records.forEach( user => {
+                                                       let userProps = user['_fields'][0]['properties'];
+                                                       let notificationObj = { user: { id: user['_fields'][0]['identity']['low'], firstName: userProps.lastName, cellNum: userProps.cellNum, email: userProps.email },
+                                                                                  release: { name: release['itms:album'][0], artist: release['itms:artist'][0], coverArt: release['itms:coverArt'][2]['_'], link: release['itms:albumLink'][0], } }
 
-                                                     redis.lpush('notificationList', JSON.stringify(notificationObj));
+                                                       redis.lpush('notificationList', JSON.stringify(notificationObj));
+                                                     })
                                                      sendNotifications();
                                                      session.close();
                                                      driver.close();
+                                                   }
+
+                                                 }).catch( err => {
+                                                   console.log(err)
+                                                 })
+
                                        }).catch( err => {
                                          console.log(err);
                                        })
@@ -133,10 +141,10 @@ request('https://itunes.apple.com/WebObjects/MZStore.woa/wpa/MRSS/newreleases/sf
                                                                       release: { name: release['itms:album'][0], artist: release['itms:artist'][0], coverArt: release['itms:coverArt'][2]['_'], link: release['itms:albumLink'][0], } }
 
                                            redis.lpush('notificationList', JSON.stringify(notificationObj));
-                                           sendNotifications();
-                                           session.close();
-                                           driver.close();
                                          })
+                                         sendNotifications();
+                                         session.close();
+                                         driver.close();
                                        }
 
                                      }).catch( err => {
