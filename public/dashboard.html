@@ -5,6 +5,7 @@
     <title>musiCatch-dashboard</title>
     <link rel="stylesheet" href="./stylesheets/style.css"></link>
     <link href="https://fonts.googleapis.com/css?family=Pacifico|Shrikhand" rel="stylesheet">
+    <script src="./javascripts/dashboard.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.js"></script> -->
@@ -18,10 +19,10 @@
         <h4 class="title2 black">You will receive texts as your favorite artists release new music!</h4>
         <h2 class="title3 sunny">Thanks for signing up!</h2>
       </div>
-      <a href="javascript: closeWindow();" method="get">
-        <div class="rectContainer seaBg">
+      <a onclick="return quitBox('quit');" method="get">
+        <!-- <div class="rectContainer seaBg">
           <h2 class="black title2">Logout</h2>
-        </div>
+        </div> -->
       </a>
     </div>
   </body>

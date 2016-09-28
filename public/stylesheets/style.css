@@ -12,7 +12,7 @@ a {
 img {
   width: 35rem;
 }
-input {
+.indexInput {
   border-radius: .5rem;
   border: .1rem solid #1C1C1C;
   padding: .1rem;
@@ -23,7 +23,7 @@ input {
   font-color: white;
   font-size: 1rem;
 }
-input:focus {
+.indexInput:focus {
   background-color: #FDF9F3;
   border: .2rem solid #1C1C1C;
   color: #1C1C1C;
@@ -60,6 +60,9 @@ button:hover {
   cursor: pointer;
 
 }
+h2 {
+  font-size: 2.8rem;
+}
 .rectContainer {
   margin: .5rem 1rem 1rem 1rem;
   /*display: inline-block;*/
@@ -82,6 +85,7 @@ button:hover {
   display: inline-block;
   line-height: 2rem;
   text-shadow: #1C1C1C .1rem .1rem;
+  font-size: 2rem;
 }
 .formContainer {
   display: flex;

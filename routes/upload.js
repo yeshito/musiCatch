@@ -16,6 +16,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+    res.redirect('dashboard');
 
     let fstream;
     req.pipe(req.busboy);
@@ -57,7 +58,6 @@ router.post('/', (req, res) => {
         });
 
     });
-    res.redirect('dashboard');
 });
 
 module.exports = router;
