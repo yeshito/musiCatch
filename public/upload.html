@@ -11,7 +11,7 @@
     <!-- <script type="text/babel" src="/javascripts/upload.jsx"></script> -->
   </head>
   <body>
-    <h1 class="sunny title2">Upload your itunes</h1><h1 class="sea title2"> artists</h1>
+    <h1 class="sunny title2">Upload your itunes</h1>  <h1 class="sea title2"> artists</h1>
     <br>
     <!-- <a href="/dashboard" method="get">
       <div class="rectContainer saffronBg">
@@ -21,14 +21,15 @@
     <div class="formContainer">
       <div class="rectContainer seaBg">
         <h2 class="black">Step 1</h2>
-        <p class="black">Open itunes and export library</p>
+        <h4 class="uploadSubtitle black">Open itunes and export library</h4>
         <img src="./images/itunes_menu.png"/>
       </div>
       <form class="rectContainer saffronBg" action="/upload" method="post" enctype="multipart/form-data">
         <h2 class="black">Step 2</h2>
-        <p class="black">Upload your itunes library file</p>
-        <input class="black" type="file" name="musicLib" accept="text/xml" size="40"/>
-        <input class="upload" type="submit">
+        <h4 class="uploadSubtitle black">Upload your itunes library file</h4>
+        <input id=musicLib class="inputFile" type="file" name="musicLib" accept="text/xml" size="40"/>
+        <label class="uploadLabel" for="musicLib">Choose a file</label>
+        <input class="uploadButton seaBg" type="submit">
       </form>
     </div>
   </body>
