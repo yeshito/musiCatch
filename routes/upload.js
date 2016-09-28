@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    res.sendFile('public/dashboard.html', { root: path.join(__dirname, '../') } );
+
     let fstream;
     req.pipe(req.busboy);
     req.busboy.on('file', function (fieldname, file, filename) {
@@ -57,6 +57,7 @@ router.post('/', (req, res) => {
         });
 
     });
+    res.redirect('dashboard');
 });
 
 module.exports = router;

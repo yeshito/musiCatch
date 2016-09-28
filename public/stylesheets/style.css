@@ -14,40 +14,51 @@ img {
 }
 input {
   border-radius: .5rem;
+  border: .1rem solid #1C1C1C;
   padding: .1rem;
   margin: .1rem;
   background-color: #1C1C1C;
-  color: white;
-  /*font-family: 'Kadwa';*/
+  color: #FDF9F3;
   font-family: 'Kadwa';
-  /*font-weight: bold;*/
   font-color: white;
   font-size: 1rem;
 }
 input:focus {
-  background-color: white;
-  border: .2rem solid ;
+  background-color: #FDF9F3;
+  border: .2rem solid #1C1C1C;
   color: #1C1C1C;
   outline: none;
+  font-size: 1.15rem;
 }
 ::-webkit-input-placeholder {
-   color: white;
+   color: #FDF9F3;
    font-family: 'Cinzel';
 }
 
 :-moz-placeholder { /* Firefox 18- */
-   color: white;
+   color: #FDF9F3;
    font-family: 'Cinzel';
 }
 
 ::-moz-placeholder {  /* Firefox 19+ */
-   color: white;
+   color: #FDF9F3;
    font-family: 'Cinzel';
 }
 
 :-ms-input-placeholder {
-   color: white;
+   color: #FDF9F3;
    font-family: 'Cinzel';
+}
+button {
+  border-radius: 1rem;
+  margin: 1rem;
+  font-family: 'Pacifico';
+  font-size: 1.3rem;
+  padding: .5rem;
+}
+button:hover {
+  cursor: pointer;
+
 }
 .rectContainer {
   margin: .5rem 1rem 1rem 1rem;
