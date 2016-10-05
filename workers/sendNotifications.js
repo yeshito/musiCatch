@@ -14,7 +14,7 @@ function sendNotifications() {
         if (err) console.log(err);
         if (!notification) process.exit(0); //if multiple workers are processing the queue, we will eventually get null values - in that case, stop.
         let notificationObj = JSON.parse(notification);
-
+        console.log(JSON.stringify(notificationObj));
         if (notificationObj.user.cellNum) {
           client.messages.create({
               to:'+1' + notificationObj.user.cellNum.replace(/-/g, ''), // Any number Twilio can deliver to

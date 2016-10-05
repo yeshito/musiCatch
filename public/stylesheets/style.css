@@ -35,13 +35,13 @@ p {
    color: #FDF9F3;
    font-family: 'Copse';
 }
-.indexSubtitle {
+.index-subtitle {
   display: inline-block;
   font-family: 'Shrikhand';
   margin-top: 0;
   line-height: 0;
 }
-.indexInput {
+.index-input {
   border-radius: .5rem;
   border: .1rem solid #1C1C1C;
   padding: .1rem;
@@ -53,21 +53,21 @@ p {
   -webkit-transition-duration: 0.35s;
   transition-duration: 0.35s;
 }
-.indexInput:hover {
+.index-input:hover {
   background-color: #FDF9F3;
   border: .2rem solid #1C1C1C;
   color: #1C1C1C;
   outline: none;
   font-size: 1.08rem;
 }
-.indexInput:focus {
+.index-input:focus {
   background-color: #FDF9F3;
   border: .2rem solid #1C1C1C;
   color: #1C1C1C;
   outline: none;
   font-size: 1.08rem;
 }
-.indexButton {
+.index-button {
   border: .15rem solid #1C1C1C;
   border-radius: 1rem;
   margin: 1rem;
@@ -77,12 +77,12 @@ p {
   -webkit-transition-duration: 0.35s;
   transition-duration: 0.35s;
 }
-.indexButton:hover {
+.index-button:hover {
   cursor: pointer;
   background-color: #FFF275;
   box-shadow: .1rem .1rem #1C1C1C;
 }
-.inputFile {
+.input-file {
 	width: 0.1px;
 	height: 0.1px;
 	opacity: 0;
@@ -90,7 +90,7 @@ p {
 	position: absolute;
 	z-index: -1;
 }
-.inputFile + .uploadLabel {
+.input-file + .upload-label {
     font-size: 1.5rem;
     font-family: 'Shrikhand';
     color: #1C1C1C;
@@ -102,17 +102,17 @@ p {
     -webkit-transition-duration: 0.35s;
     transition-duration: 0.35s;
 }
-.inputFile:focus + .uploadLabel,
-.inputFile + .uploadLabel:hover {
+.input-file:focus + .upload-label,
+.input-file + .upload-label:hover {
     background-color: #D63230;
     box-shadow: .2rem .2rem #1C1C1C;
     cursor: pointer;
 }
-.uploadSubtitle {
+.upload-subtitle {
   margin-top: 0;
   font-size: 1.6rem;
 }
-.uploadButton {
+.upload-button {
   border: .15rem solid #1C1C1C;
   border-radius: 1rem;
   margin: 1rem;
@@ -122,12 +122,12 @@ p {
   -webkit-transition-duration: 0.35s;
   transition-duration: 0.35s;
 }
-.uploadButton:hover {
+.upload-button:hover {
   cursor: pointer;
   background-color: #FFF275;
   box-shadow: .1rem .1rem #1C1C1C;
 }
-.rectContainer {
+.rect-container {
   margin: .5rem 1rem 1rem 1rem;
   /*display: inline-block;*/
   border-radius: 1rem;
@@ -139,31 +139,31 @@ p {
   font-size: 5rem;
   margin-top: 1.5rem;
 }
-.title2 {
+.title-2 {
   display: inline-block;
   font-family: 'Shrikhand';
   margin-top: 2.5rem;
   line-height: 1.8rem;
 }
-.title3 {
+.title-3 {
   display: inline-block;
   line-height: 2rem;
   text-shadow: #1C1C1C .1rem .1rem;
   font-size: 2rem;
 }
-.formContainer {
+.form-container {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
   justify-content: center;
 }
-.vertContainer {
+.vert-container {
   display: flex;
   flex-flow: column wrap;
   align-items: center;
   justify-content: center;
 }
-.circleForm {
+.circle-form {
   width: 25rem;
   height: 25rem;
   border-radius: 25rem;
@@ -177,12 +177,11 @@ p {
   background:#000;
   box-shadow: #1C1C1C .2rem .2rem;
 }
-.uploadForm {
+.upload-form {
   width: 25rem;
   height: 25rem;
   border-radius: 25rem;
   font-size: 1.5rem;
-  /*line-height: 1rem;*/
   margin: 5rem;
   display: flex;
   flex-flow: row wrap;
@@ -190,8 +189,6 @@ p {
   justify-content: center;
   box-shadow: #1C1C1C .2rem .2rem;
   margin-top: 5rem;
-  /*width: 50rem;*/
-  /*height: 10rem;*/
 }
 
 /* Colors */
@@ -207,13 +204,13 @@ p {
 .sea {
   color: #40BCD8;
 }
-.seaGreen {
+.sea-green {
   color: #8ACB88;
 }
-.navyBlue {
+.navy-blue {
   color: #1C77C3;
 }
-.eggShell {
+.egg-shell {
   color: #F0E7D8;
 }
 .black {
@@ -223,30 +220,30 @@ p {
   color: #FDF9F3;
 }
 
-.saffronBg {
+.saffron-bg {
   background-color: #F39237;
 }
-.redBg {
+.red-bg {
   background-color: #D63230;
 }
-.sunnyBg {
+.sunny-bg {
   background-color: #FFF275;
 }
-.seaBg {
+.sea-bg {
   background-color: #40BCD8;
 }
-.seaGreen {
+.sea-green {
   background-color: #8ACB88;
 }
-.navyBlueBg {
+.navy-blue-bg {
   background-color: #1C77C3;
 }
-.blackBg {
+.black-bg {
   background-color: #1C1C1C;
 }
-.whiteBg {
+.white-bg {
   background-color: #FDF9F3;
 }
-.eggShellBg {
+.eggshell-bg {
   background-color: #F0E7D8;
 }

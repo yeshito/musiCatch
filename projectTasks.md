@@ -5,11 +5,11 @@
 - [X] * Setup user authentication and authorization using express, bcrypt, and Neo4j
 - [X] * Once account is created provide instructions for user to export itunes library to xml file and upload the file to their account, parse the xml file for the artist names, and send that from the front-end to the database, associate them with the user and put those artists at the front of the update queue.
 - [X] * Write api requests for getting a new artist's id, and creating them in the database
-- [ ] * Write api request for getting artists releases and parsing it for most recent and putting them into the database.
-- [ ] * Create worker which checks for new releases from RSS feed and sends updates to my database
-- [ ] * Create worker which queues up emails to be sent out when new releases match an artist that is liked by a user i the database.
-- [ ] * Create worker which receives messages, usernames, phone numbers, to compose message and put into queue.
-- [ ] * Create worker which goes through queue of update text messages, compiles them and sends them off to Twilio to actually send texts and sends confirmation to server to update in db the date and release that a user was sent an update on.
+- [X] * Write api request for getting artists releases and parsing it for most recent and putting them into the database.
+- [X] * Create worker which checks for new releases from RSS feed and sends updates to my database
+- [X] * Create worker which queues up messages to be sent out when new releases match an artist that is liked by a user i the database.
+- [X] * Create worker which receives messages, usernames, phone numbers, to compose message and put into queue.
+- [X] * Create worker which goes through queue of update text messages, compiles them and sends them off to Twilio to actually send texts and sends confirmation to server to update in db the date and release that a user was sent an update on.
 
 
 
@@ -24,16 +24,16 @@
 ~ 80 artists in your itunes library
 
 ### LAST-MINUTE TASKS ###
-- [ ] Change twilio account SID, authtoken etc. to live version in .env file
+- [X] Change twilio account SID, authtoken etc. to live version in .env file
 
 ## Technologies ##
   * HTML5
   * CSS3
   * Javascript
   * Node/Express
-  * React
   * Neo4j
   * Redis
+  * Twilio
 
 
 ## Database schema for MusiCatch ##

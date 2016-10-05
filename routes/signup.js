@@ -16,7 +16,7 @@ router.post('/', (req, res, next) => {
     .run( "MATCH (a:User) WHERE a.email = {email} RETURN a", { email: req.body.newEmail })
     .then( result => {
 
-      if(result.records.length > 0) {
+      if (result.records.length > 0) {
         res.send('email already exists!');
       } else {
 
@@ -27,13 +27,15 @@ router.post('/', (req, res, next) => {
                     console.log(user)
                     let userId = user.records[0]['_fields'][0]['low'];
                     req.session.user = userId;
-                    res.send('../public/upload.html');
-                }, error => {
-                  console.log(error);
-                })
+                    res.redirect('/upload');
+                  }).catch( error => {
+                    console.log(error);
+                  })
+                  .then( result => {
+                    session.close();
+                    driver.close();
+                  })
       }
-      session.close();
-      driver.close();
     })
 })
 module.exports = router;
