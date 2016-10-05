@@ -14,7 +14,7 @@
 
 
 ### FRONT-END ###
-- [ ] * Wireframes
+- [X] * Wireframes
 - [X] * Setup basic home page with account creation and login, with dark them
 - [X] * Ability to upload xml itunes library file
 - [X] Stylish Step by step instructions on how to upload your itunes xml library
